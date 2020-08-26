@@ -1,0 +1,14 @@
+.grope-button{
+min-width: 20px;
+height: 18px;
+padding: 0;
+border: none;
+background-color: #FFFFFF;
+background-image: url(../../images/Vector5.svg);
+background-size: cover;
+background-position:center;
+background-repeat: no-repeat;
+box-sizing: border-box;
+align-self:center;
+cursor: pointer;
+}
