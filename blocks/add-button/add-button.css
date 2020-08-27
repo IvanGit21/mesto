@@ -12,6 +12,7 @@ box-sizing: border-box;
 border-radius: 2px;
 align-self:center;
 cursor: pointer;
+outline: none;
 }
 .add-button:hover{
     opacity: 0.6;

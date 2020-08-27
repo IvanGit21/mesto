@@ -1,0 +1,19 @@
+.popup{
+    max-height: 720px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+}
+.popup::before{
+    content:'';
+    opacity: 0.5;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
