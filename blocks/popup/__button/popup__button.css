@@ -20,6 +20,6 @@ outline: none;
 
 @media all and (max-width: 500px) {
     .popup__button{
-        min-width: 200px;
+        min-width: 230px;
     }
 } 

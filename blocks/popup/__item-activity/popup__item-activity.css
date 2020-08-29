@@ -1,10 +1,9 @@
 .popup__item-activity{
     width: 100%;
-    padding: 0;
+    padding:10px 0;
     margin: 0;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, .2); 
-    outline: none;
     font-family: 'Inter', Arial, sans-serif;
 font-style: normal;
 font-weight: normal;
