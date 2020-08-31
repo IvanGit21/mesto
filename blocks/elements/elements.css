@@ -8,6 +8,23 @@
 }
 @media all and (max-width: 881px) {
     .elements{
+        max-width: 582px;
+    }
+} 
+@media all and (max-width: 881px) {
+    .elements{
+        max-width: 582px;
+    }
+} 
+
+@media all and (max-width: 582px) {
+    .elements{
+        max-width:320px
+    }
+} 
+@media all and (max-width: 320px) {
+    .elements{
+        max-width:none;
         padding: 0 19px;
     }
 } 
