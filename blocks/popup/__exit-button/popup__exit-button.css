@@ -19,6 +19,6 @@ left:430px;
 }
 @media all and (max-width: 500px) {
     .popup__exit-button{
-        left:260px;
+        left:240px;
     }
 } 

@@ -4,3 +4,8 @@
     box-sizing: border-box;
     border: 0;
 }
+@media all and (max-width: 500px) {
+    .popup__input-conteiner{
+        padding: 34px 0;
+    }
+} 

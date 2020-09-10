@@ -1,32 +1,47 @@
-let popup=document.querySelector('.popup');
-let editButton=document.querySelector('.edit-button');
-let exitButton=document.querySelector('.popup__exit-button');
-let popupButton=document.querySelector('.popup__button');
-let formElement = document.querySelector('.popup__conteiner');
-let nameInput = document.querySelector('.popup__item-name');
-let jobInput = document.querySelector('.popup__item-activity');
+let editButton = document.querySelector('.edit-button');
+let popupButtonAdd = document.querySelector('.popup__button_add');
+let popupButtonEdit = document.querySelector('.popup__button_edit');
+let formElementAdd = document.querySelector('.popup__form_add');
+let formElementEdit = document.querySelector('.popup__form_edit');
+let nameInputAdd = document.querySelector('.popup__item-name_add');
+let jobInputAdd = document.querySelector('.popup__item-activity_add');
+let nameInputEdit = document.querySelector('.popup__item-name_edit');
+let jobInputEdit = document.querySelector('.popup__item-activity_edit')
 let profileName = document.querySelector('.profile__name');
 let profileActivity = document.querySelector('.profile__activity');
+let popupEdit = document.querySelector('.popup_edit');
+let addButton = document.querySelector('.add-button');
+let popupAdd = document.querySelector('.popup_add');
+let exitButtonAdd = document.querySelector('.popup__exit-button_add');
+let exitButtonEdit=document.querySelector('.popup__exit-button_edit');
+let DelButton = document.querySelector('.element__del-button');
 
+
+function openPopupAdd(){
+    popupAdd.classList.toggle('popup_opened')
+}
 function openPopupEdit(){
-    popup.classList.toggle('popup_opened')
+    popupEdit.classList.toggle('popup_opened')
 }
 
+addButton.addEventListener('click',openPopupAdd);
+exitButtonAdd.addEventListener('click',openPopupAdd);
 editButton.addEventListener('click',openPopupEdit);
-exitButton.addEventListener('click',openPopupEdit);
-popupButton.addEventListener('click',openPopupEdit);
+exitButtonEdit.addEventListener('click',openPopupEdit);
+popupButtonAdd.addEventListener('click',openPopupAdd);
+popupButtonEdit.addEventListener('click',openPopupEdit);
 
-function formSubmitHandler (evt) {
+function formSubmitHandlerEdit (evt) {
     evt.preventDefault(); 
 
-    nameInput=nameInput.value;
-    jobInput=jobInput.value;
+    nameInputEdit = nameInputEdit.value;
+    jobInputEdit = jobInputEdit.value;
 
-    profileName.textContent = nameInput;
-    profileActivity.textContent = jobInput;
+    profileName.textContent = nameInputEdit;
+    profileActivity.textContent = jobInputEdit;
 }
 
-formElement.addEventListener('submit', formSubmitHandler);
+formElementEdit.addEventListener('submit', formSubmitHandlerEdit);
 
 const initialCards = [
     {
@@ -56,8 +71,8 @@ const initialCards = [
 ];
 
 
-addCard = (name,link) =>{
-    const templateCards = document.querySelector('#elements').content;
+addCard = (name,link) =>{  
+    const templateCards = document.querySelector('#template-cards').content;
     const elements = document.querySelector('.elements');
     
     const cloneCard = templateCards.cloneNode(true);
@@ -65,10 +80,23 @@ addCard = (name,link) =>{
     cloneCard.querySelector('.element__image').src = link;
     cloneCard.querySelector('.element__title').textContent = name;
     
-    elements.append(cloneCard);
+    elements.prepend(cloneCard);
 }
+
 initialCards.forEach((item) => {
     addCard(item.name,item.link)
 })
 
+
+function formSubmitHandlerAdd (evt) {
+    evt.preventDefault(); 
+
+    nameInputAdd = nameInputAdd.value;
+    jobInputAdd = jobInputAdd.value;
+
+    addCard(nameInputAdd,jobInputAdd);
+    
+}
+
+formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
