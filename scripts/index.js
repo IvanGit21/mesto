@@ -78,6 +78,14 @@ addCard = (name,link) =>{
     
     cloneCard.querySelector('.element__image').src = link;
     cloneCard.querySelector('.element__title').textContent = name;
+    cloneCard.querySelector('.grope-button').addEventListener('click',function(evt){
+        evt.target.classList.toggle('grope-button_active')
+    })
+    cloneCard.querySelector('.element__del-button').addEventListener('click',function(evt){
+        const buttonClick = evt.target;
+        const element = buttonClick.closest('.element');
+        element.remove();
+    })
     
     elements.prepend(cloneCard);
 }
@@ -98,14 +106,3 @@ function formSubmitHandlerAdd (evt) {
 }
 
 formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
-
-
-delCard = (evt) => {
-    const buttonClick = evt.target;
-    const element = buttonClick.closest('.element');
-    element.remove();
-}
-
-document.querySelectorAll('.element__del-button').forEach((btn) => {
-    btn.addEventListener("click", delCard)
-})
