@@ -14,8 +14,7 @@ let addButton = document.querySelector('.add-button');
 let popupAdd = document.querySelector('.popup_add');
 let exitButtonAdd = document.querySelector('.popup__exit-button_add');
 let exitButtonEdit=document.querySelector('.popup__exit-button_edit');
-let DelButton = document.querySelector('.element__del-button');
-
+const delButton = document.querySelector('.element__del-button');
 
 function openPopupAdd(){
     popupAdd.classList.toggle('popup_opened')
@@ -84,7 +83,7 @@ addCard = (name,link) =>{
 }
 
 initialCards.forEach((item) => {
-    addCard(item.name,item.link)
+    addCard(item.name,item.link);
 })
 
 
@@ -100,3 +99,13 @@ function formSubmitHandlerAdd (evt) {
 
 formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
+
+delCard = (evt) => {
+    const buttonClick = evt.target;
+    const element = buttonClick.closest('.element');
+    element.remove();
+}
+
+document.querySelectorAll('.element__del-button').forEach((btn) => {
+    btn.addEventListener("click", delCard)
+})
