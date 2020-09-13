@@ -32,3 +32,7 @@
 @import url(../blocks/popup/__exit-button/popup__exit-button.css);
 @import url(../blocks/popup/__conteiner/popup__conteiner.css);
 @import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__image/popup__image.css);
+@import url(../blocks/popup/__conteiner/_activity-image/popup__conteiner_activity-image.css);
+@import url(../blocks/popup/__header/_activity-image/popup__header_activity-image.css);
+@import url(../blocks/popup/__exit-button/_activity-image/popup__exit-button_activity-image.css);
