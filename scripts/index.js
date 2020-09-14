@@ -3,10 +3,12 @@ const popupButtonAdd = document.querySelector('.popup__button_add');
 const popupButtonEdit = document.querySelector('.popup__button_edit');
 const formElementAdd = document.querySelector('.popup__form_add');
 const formElementEdit = document.querySelector('.popup__form_edit');
-let nameInputAdd = document.querySelector('.popup__item-name_add');
-let linkInputAdd = document.querySelector('.popup__item-activity_add');
-let nameInputEdit = document.querySelector('.popup__item-name_edit');
-let jobInputEdit = document.querySelector('.popup__item-activity_edit')
+
+let nameInputAdd = document.querySelector('.popup__input_type_card-name');
+let linkInputAdd = document.querySelector('.popup__type_input_url');
+let nameInputEdit = document.querySelector('.popup__input_type_name');
+let jobInputEdit = document.querySelector('.popup__input_type_description');
+
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
 const popupEdit = document.querySelector('.popup_edit');
