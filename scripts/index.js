@@ -3,10 +3,10 @@ const popupButtonAdd = document.querySelector('.popup__button_add');
 const popupButtonEdit = document.querySelector('.popup__button_edit');
 const formElementAdd = document.querySelector('.popup__form_add');
 const formElementEdit = document.querySelector('.popup__form_edit');
-let nameInputAdd = document.querySelector('.popup__input_type_card-name');
-let linkInputAdd = document.querySelector('.popup__type_input_url');
-let nameInputEdit = document.querySelector('.popup__input_type_name');
-let jobInputEdit = document.querySelector('.popup__input_type_description');
+const nameInputAdd = document.querySelector('.popup__input_type_card-name');
+const linkInputAdd = document.querySelector('.popup__type_input_url');
+const nameInputEdit = document.querySelector('.popup__input_type_name');
+const jobInputEdit = document.querySelector('.popup__input_type_description');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
 const popupEdit = document.querySelector('.popup_edit');
@@ -19,36 +19,29 @@ const popupActiveImage = document.querySelector('.popup_activity-image');
 const popupImage = document.querySelector('.popup__image');
 const popupHeaderActivityImage = document.querySelector('.popup__header_activity-image')
 const popupExitButttonActivImage = document.querySelector('.popup__exit-button_activity-image');
+const templateCards = document.querySelector('#template-cards').content;
 
-function openPopupAdd(){
-    if(popupAdd.classList.contains('popup_opened')){
-        popupAdd.classList.remove('popup_opened')
-    } else{
-        popupAdd.classList.add('popup_opened')
-    }
-}
-function openPopupEdit(){
-    if(popupEdit.classList.contains('popup_opened')){
-        popupEdit.classList.remove('popup_opened')
-    } else{
-        popupEdit.classList.add('popup_opened')
-    }
+const openPopup = (popup) => {
+    popup.classList.add('popup_opened')
 }
 
-addButton.addEventListener('click',openPopupAdd);
-exitButtonAdd.addEventListener('click',openPopupAdd);
-editButton.addEventListener('click',openPopupEdit);
-exitButtonEdit.addEventListener('click',openPopupEdit);
+const closePopup = (popup) => {
+    popup.classList.remove('popup_opened')
+}
+
+addButton.addEventListener('click',() => openPopup(popupAdd));
+exitButtonAdd.addEventListener('click',() => closePopup(popupAdd));
+editButton.addEventListener('click',() => openPopup(popupEdit));
+exitButtonEdit.addEventListener('click',() => closePopup(popupEdit));
+
 
 function formSubmitHandlerEdit (evt) {
     evt.preventDefault(); 
 
-    nameInputEdit = nameInputEdit.value;
-    jobInputEdit = jobInputEdit.value;
+    profileName.textContent = nameInputEdit.value;
+    profileActivity.textContent = jobInputEdit.value;
 
-    profileName.textContent = nameInputEdit;
-    profileActivity.textContent = jobInputEdit;
-    openPopupEdit();
+    closePopup(popupEdit);
 }
 
 formElementEdit.addEventListener('submit', formSubmitHandlerEdit);
@@ -86,15 +79,11 @@ const handleDeleteCard = (evt) => {
 }
 
 const handleLikeIcon = (evt) => {
-    if(evt.target.classList.contains('grope-button_active')){
-        evt.target.classList.remove('grope-button_active')
-    } else{
-        evt.target.classList.add('grope-button_active')
-    }
+    evt.target.classList.toggle('grope-button_active')
 }
 
 const handlePreviewPicture = (evt) =>{
-    popupActiveImage.classList.toggle('popup_opened');
+    openPopup(popupActiveImage);
     const src = evt.target.getAttribute('src');
     popupImage.setAttribute('src',src);
     const name = evt.target.getAttribute('alt');
@@ -102,8 +91,7 @@ const handlePreviewPicture = (evt) =>{
 }
 
 const getCardElement = (name,link) =>{
-    const templateCards = document.querySelector('#template-cards').content;
-    const templateElement = document.querySelector('.elements');
+    const sectionCard = document.querySelector('.elements');
     const cloneCard = templateCards.cloneNode(true);
     cloneCard.querySelector('.element__image').src = link;
     cloneCard.querySelector('.element__image').alt = name;
@@ -112,8 +100,7 @@ const getCardElement = (name,link) =>{
     cloneCard.querySelector('.grope-button').addEventListener('click',handleLikeIcon);
     cloneCard.querySelector('.element__del-button').addEventListener('click',handleDeleteCard);
     
-    templateElement.prepend(cloneCard);
-    
+    sectionCard.prepend(cloneCard);
 }
 
 const renderCard = () =>{
@@ -127,15 +114,11 @@ renderCard();
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault(); 
 
-    nameInputAdd = nameInputAdd.value;
-    linkInputAdd = linkInputAdd.value;
-
-    getCardElement(nameInputAdd,linkInputAdd);
-    openPopupAdd();
+    getCardElement(nameInputAdd.value,linkInputAdd.value);
+    
+    closePopup(popupAdd);
 }
 
 formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
-popupExitButttonActivImage.addEventListener('click',function(evt){
-        popupActiveImage.classList.toggle('popup_opened');
-    })
+popupExitButttonActivImage.addEventListener('click', () => closePopup(popupActiveImage));
