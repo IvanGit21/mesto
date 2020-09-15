@@ -20,6 +20,7 @@ const popupImage = document.querySelector('.popup__image');
 const popupHeaderActivityImage = document.querySelector('.popup__header_activity-image')
 const popupExitButttonActivImage = document.querySelector('.popup__exit-button_activity-image');
 const templateCards = document.querySelector('#template-cards').content;
+const sectionCard = document.querySelector('.elements');
 
 const openPopup = (popup) => {
     popup.classList.add('popup_opened')
@@ -91,7 +92,7 @@ const handlePreviewPicture = (evt) =>{
 }
 
 const getCardElement = (name,link) =>{
-    const sectionCard = document.querySelector('.elements');
+
     const cloneCard = templateCards.cloneNode(true);
     cloneCard.querySelector('.element__image').src = link;
     cloneCard.querySelector('.element__image').alt = name;
@@ -100,21 +101,20 @@ const getCardElement = (name,link) =>{
     cloneCard.querySelector('.grope-button').addEventListener('click',handleLikeIcon);
     cloneCard.querySelector('.element__del-button').addEventListener('click',handleDeleteCard);
     
-    sectionCard.prepend(cloneCard);
+    return cloneCard;
+}
+const renderCard = (name,link) => {
+    sectionCard.prepend(getCardElement(name,link))
 }
 
-const renderCard = () =>{
 initialCards.forEach((item) => {
-    getCardElement(item.name,item.link)
-    })
-}
-
-renderCard();
+    renderCard(item.name,item.link)
+})
 
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault(); 
 
-    getCardElement(nameInputAdd.value,linkInputAdd.value);
+    renderCard(nameInputAdd.value,linkInputAdd.value);
     
     closePopup(popupAdd);
 }
