@@ -40,11 +40,13 @@
             <section class="popup popup_edit">
                 <div class="popup__container">
                     <button type="button" class="popup__exit-button popup__exit-button_edit"></button>
-                    <form class="popup__form popup__form_edit">
+                    <form class="popup__form popup__form_edit" novalidate>
                         <h2 class="popup__header">Редактировать профиль</h2>
                         <fieldset class="popup__input-container">
-                            <input type="text" required value="Жак-Ив Кусто" class="popup__input popup__input_type_name">
-                            <input type="text" required value="Исследователь океана" class="popup__input popup__input_type_description">
+                            <input type="text" required minlength="2" maxlength="40" value="Жак-Ив Кусто" placeholder="Имя" class="popup__input popup__input_type_name" id="name-input">
+                            <span id="name-input-error" class="popup__input-error"></span>
+                            <input type="text" required minlength="2" maxlength="200" value="Исследователь океана" placeholder="О себе" class="popup__input popup__input_type_description" id="description-input">
+                            <span id="description-input-error" class="popup__input-error"></span>
                         </fieldset>
                         <button type="submit" class="popup__button popup__button_edit" aria-label="Кнопка сохранения">Сохранить</button>
                     </form>
@@ -53,11 +55,13 @@
             <section class="popup popup_add">
                 <div class="popup__container">
                     <button type="button" class="popup__exit-button popup__exit-button_add"></button>
-                    <form class="popup__form popup__form_add">
+                    <form class="popup__form popup__form_add" novalidate>
                         <h2 class="popup__header">Новое место</h2>
                         <fieldset class="popup__input-container">
-                            <input type="text" required value="" placeholder="Название" class="popup__input popup__input_type_card-name">
-                            <input type="text" required value="" placeholder="Ссылка на картинку" class="popup__input popup__type_input_url">
+                            <input type="text" required minlength="2" maxlength="30" value="" placeholder="Название" class="popup__input popup__input_type_card-name" id="card-name-input">
+                            <span id="card-name-input-error" class="popup__input-error"></span>
+                            <input type="url" required value="" placeholder="Ссылка на картинку" class="popup__input popup__input_type_url" id="url-input">
+                            <span id="url-input-error" class="popup__input-error"></span>
                         </fieldset>
                         <button type="submit" class="popup__button popup__button_add" aria-label="Кнопка создания">Создать</button>
                     </form>
@@ -75,6 +79,7 @@
             <p class="footer__text">&copy; 2020 Mesto Russia</p>
         </footer> 
     </div>
-    <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script> 
 </body>
 </html>

@@ -4,7 +4,7 @@ const popupButtonEdit = document.querySelector('.popup__button_edit');
 const formElementAdd = document.querySelector('.popup__form_add');
 const formElementEdit = document.querySelector('.popup__form_edit');
 const nameInputAdd = document.querySelector('.popup__input_type_card-name');
-const linkInputAdd = document.querySelector('.popup__type_input_url');
+const linkInputAdd = document.querySelector('.popup__input_type_url');
 const nameInputEdit = document.querySelector('.popup__input_type_name');
 const jobInputEdit = document.querySelector('.popup__input_type_description');
 const profileName = document.querySelector('.profile__name');
@@ -92,7 +92,6 @@ const handlePreviewPicture = (evt) =>{
 }
 
 const getCardElement = (name,link) =>{
-
     const cloneCard = templateCards.cloneNode(true);
     cloneCard.querySelector('.element__image').src = link;
     cloneCard.querySelector('.element__image').alt = name;
