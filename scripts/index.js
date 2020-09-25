@@ -21,15 +21,25 @@ const popupHeaderActivityImage = document.querySelector('.popup__header_activity
 const popupExitButttonActivImage = document.querySelector('.popup__exit-button_activity-image');
 const templateCards = document.querySelector('#template-cards').content;
 const sectionCard = document.querySelector('.elements');
-const poupContainer = document.querySelector('.popup');
+const popupContainer = document.querySelector('.popup');
+
+
+const clickOverlayClose =(evt)=>{
+    const popupOpened = document.querySelector('.popup_opened');
+    if(evt.target === evt.currentTarget){
+        closePopup(popupOpened);
+    }
+}
 
 
 const openPopup = (popup) => {
     popup.classList.add('popup_opened')
+    popup.addEventListener('click',clickOverlayClose);
 }
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened')
+    popup.removeEventListener('click', clickOverlayClose);
 }
 
 addButton.addEventListener('click',() => openPopup(popupAdd));
@@ -125,19 +135,11 @@ formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 popupExitButttonActivImage.addEventListener('click', () => closePopup(popupActiveImage));
 
 
-const clickOverlayClose =(evt)=>{
-    const popupOpened = document.querySelector('.popup_opened');
-    if(evt.target === evt.currentTarget){
-        closePopup(popupOpened);
-    }
-}
-
-poupContainer.addEventListener('click',clickOverlayClose);
 
 
 const escClosePopup = (evt) =>{
+    const popupOpened = document.querySelector('.popup_opened');
     if(evt.key === 'Escape'){
-        const popupOpened = document.querySelector('.popup_opened');
         closePopup(popupOpened);
     }
 }
