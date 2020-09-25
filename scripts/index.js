@@ -21,6 +21,8 @@ const popupHeaderActivityImage = document.querySelector('.popup__header_activity
 const popupExitButttonActivImage = document.querySelector('.popup__exit-button_activity-image');
 const templateCards = document.querySelector('#template-cards').content;
 const sectionCard = document.querySelector('.elements');
+const poupContainer = document.querySelector('.popup');
+
 
 const openPopup = (popup) => {
     popup.classList.add('popup_opened')
@@ -121,3 +123,23 @@ function formSubmitHandlerAdd (evt) {
 formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
 popupExitButttonActivImage.addEventListener('click', () => closePopup(popupActiveImage));
+
+
+const clickOverlayClose =(evt)=>{
+    const popupOpened = document.querySelector('.popup_opened');
+    if(evt.target === evt.currentTarget){
+        closePopup(popupOpened);
+    }
+}
+
+poupContainer.addEventListener('click',clickOverlayClose);
+
+
+const escClosePopup = (evt) =>{
+    if(evt.key === 'Escape'){
+        const popupOpened = document.querySelector('.popup_opened');
+        closePopup(popupOpened);
+    }
+}
+
+document.addEventListener('keydown',escClosePopup);
