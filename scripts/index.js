@@ -31,15 +31,24 @@ const clickOverlayClose =(evt)=>{
     }
 }
 
+const closePopupEsc = (evt) =>{
+    const popupOpened = document.querySelector('.popup_opened');
+    if(evt.key === 'Escape'){
+        closePopup(popupOpened);
+    }
+}
+
 
 const openPopup = (popup) => {
     popup.classList.add('popup_opened')
     popup.addEventListener('click',clickOverlayClose);
+    document.addEventListener('keydown',closePopupEsc);
 }
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened')
     popup.removeEventListener('click', clickOverlayClose);
+    document.removeEventListener('keydown',closePopupEsc);
 }
 
 addButton.addEventListener('click',() => openPopup(popupAdd));
@@ -134,14 +143,3 @@ formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
 
 popupExitButttonActivImage.addEventListener('click', () => closePopup(popupActiveImage));
 
-
-
-
-const escClosePopup = (evt) =>{
-    const popupOpened = document.querySelector('.popup_opened');
-    if(evt.key === 'Escape'){
-        closePopup(popupOpened);
-    }
-}
-
-document.addEventListener('keydown',escClosePopup);
