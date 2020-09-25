@@ -1,20 +1,27 @@
 const formElement = document.querySelector('.popup__form');
 const formInput = formElement.querySelector('.popup__input');
-
+const param = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active'
+};
 
 const showInputError = (formElement, inputElement,errorMessage) => {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
-    inputElement.classList.add('popup__input_type_error');
-    errorElement.classList.add('popup__input-error_active');
+    inputElement.classList.add(param.inputErrorClass);
+    errorElement.classList.add(param.errorClass);
     errorElement.textContent = errorMessage;
 }
 
 const hideInputError = (formElement,inputElement) => {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
-    inputElement.classList.remove('popup__input_type_error');
-    errorElement.classList.remove('popup__input-error_active');
+    inputElement.classList.remove(param.inputErrorClass);
+    errorElement.classList.remove(param.errorClass);
     errorElement.textContent = '';
 }
 
@@ -33,17 +40,17 @@ const hasInvalidInput = (inputList) => {
 
 const toggleButtonState = (inputList, buttonElement) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add('popup__button_disabled');
+        buttonElement.classList.add(param.inactiveButtonClass);
         buttonElement.setAttribute('disabled',true)
     } else {
-        buttonElement.classList.remove('popup__button_disabled');
+        buttonElement.classList.remove(param.inactiveButtonClass);
         buttonElement.removeAttribute('disabled',true)
     }
 };
 
 const setEventListeners = (formElement) =>{
-    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-    const buttonElement = formElement.querySelector('.popup__button');
+    const inputList = Array.from(formElement.querySelectorAll(param.inputSelector));
+    const buttonElement = formElement.querySelector(param.submitButtonSelector);
     toggleButtonState(inputList, buttonElement);
 
     inputList.forEach((inputElement)=>{
@@ -54,12 +61,12 @@ const setEventListeners = (formElement) =>{
     })
 }
 const enableValidation = () =>{
-    const formList = Array.from(document.querySelectorAll('.popup__form'));
+    const formList = Array.from(document.querySelectorAll(param.formSelector));
 
     formList.forEach((formElement) =>{
         setEventListeners(formElement);
     })
 }
 
-enableValidation();
+enableValidation(param);
 
