@@ -30,8 +30,10 @@ export class Card {
     _setEventListeners(){
         this._element.querySelector('.grope-button').addEventListener('click', ()=> this._handleLikeIcon());
         this._element.querySelector('.element__image').addEventListener('click', ()=>{this._handleOpenPopup()});
-        this._element.querySelector('.element__del-button').addEventListener('click', ()=>{this._handleDeleteCard()})
+        this._element.querySelector('.element__del-button').addEventListener('click', ()=>{this._handleDeleteCard()});
+        popupActiveImage.addEventListener('click',(evt)=>{this._handleClosePopupOnOverlay(evt)})
         popupExitButttonActivImage.addEventListener('click', ()=>{this._hendleClosePopup()});
+        document.addEventListener('keydown', (evt)=>{this._hendleClosePopupEsc(evt)});
     }
     // Функция переключения кнопки лайка
     _handleLikeIcon(){
@@ -48,6 +50,18 @@ export class Card {
         popupImage.src = '';
         popupHeaderActivityImage.textContent = '';
         popupActiveImage.classList.remove('popup_opened');
+    }
+    // Закрытие попапа по оверлей
+    _handleClosePopupOnOverlay(evt){
+        if(evt.target === evt.currentTarget){
+        this._hendleClosePopup()
+        }
+    }
+    // Закрытие попапа на Esc
+    _hendleClosePopupEsc(evt){
+        if(evt.key === 'Escape'){
+            this._hendleClosePopup()
+        }
     }
     // Функция удаления карточки
     _handleDeleteCard(){

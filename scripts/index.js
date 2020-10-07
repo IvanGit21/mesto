@@ -2,8 +2,6 @@ import {initialCards} from './arr.js'
 import {Card} from './Card.js'
 
 const editButton = document.querySelector('.edit-button');
-const popupButtonAdd = document.querySelector('.popup__button_add');
-const popupButtonEdit = document.querySelector('.popup__button_edit');
 const formElementAdd = document.querySelector('.popup__form_add');
 const formElementEdit = document.querySelector('.popup__form_edit');
 const nameInputAdd = document.querySelector('.popup__input_type_card-name');
@@ -53,10 +51,14 @@ const closePopup = (popup) => {
     document.removeEventListener('keydown',closePopupEsc);
 }
 
+const setEventListeners = () =>{
 addButton.addEventListener('click',() => openPopup(popupAdd));
 exitButtonAdd.addEventListener('click',() => closePopup(popupAdd));
 editButton.addEventListener('click',() => openPopup(popupEdit));
 exitButtonEdit.addEventListener('click',() => closePopup(popupEdit));
+}
+
+setEventListeners();
 
 // Сабмит формы добавления
 function formSubmitHandlerAdd (evt) {
