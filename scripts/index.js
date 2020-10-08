@@ -1,6 +1,7 @@
 import {initialCards} from './arr.js'
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
+import {openPopup,closePopup} from './utils.js'
 
 const editButton = document.querySelector('.edit-button');
 const formElementAdd = document.querySelector('.popup__form_add');
@@ -36,33 +37,6 @@ const renderCard = (name,link, cardSelector) =>{
 initialCards.forEach((item)=>{
     renderCard(item.name,item.link, '#template-cards')
 })
-// Закрытие попапа по клику на оверлей
-const clickOverlayClose =(evt)=>{
-    const popupOpened = document.querySelector('.popup_opened');
-    if(evt.target === evt.currentTarget){
-        closePopup(popupOpened);
-    }
-}
-// Закрытие попапа по ESC
-const closePopupEsc = (evt) =>{
-    const popupOpened = document.querySelector('.popup_opened');
-    if(evt.key === 'Escape'){
-        closePopup(popupOpened);
-    }
-}
-
-// Функция открытия попапа
-const openPopup = (popup) => {
-    popup.classList.add('popup_opened')
-    popup.addEventListener('click',clickOverlayClose);
-    document.addEventListener('keydown',closePopupEsc);
-}
-// Функция закрытия попапа
-const closePopup = (popup) => {
-    popup.classList.remove('popup_opened')
-    popup.removeEventListener('click', clickOverlayClose);
-    document.removeEventListener('keydown',closePopupEsc);
-}
 // Функция слушателей события
 const setEventListeners = () =>{
 addButton.addEventListener('click',() => openPopup(popupAdd));

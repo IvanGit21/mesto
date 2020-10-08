@@ -1,3 +1,5 @@
+import {openPopup,closePopup} from './utils.js'
+
 const popupImage = document.querySelector('.popup__image');
 const popupActiveImage = document.querySelector('.popup_activity-image');
 const popupExitButttonActivImage = document.querySelector('.popup__exit-button_activity-image');
@@ -31,9 +33,7 @@ export class Card {
         this._element.querySelector('.grope-button').addEventListener('click', ()=> this._handleLikeIcon());
         this._element.querySelector('.element__image').addEventListener('click', ()=>{this._handleOpenPopup()});
         this._element.querySelector('.element__del-button').addEventListener('click', ()=>{this._handleDeleteCard()});
-        popupActiveImage.addEventListener('click',(evt)=>{this._handleClosePopupOnOverlay(evt)})
         popupExitButttonActivImage.addEventListener('click', ()=>{this._hendleClosePopup()});
-        document.addEventListener('keydown', (evt)=>{this._hendleClosePopupEsc(evt)});
     }
     // Функция переключения кнопки лайка
     _handleLikeIcon(){
@@ -43,25 +43,13 @@ export class Card {
     _handleOpenPopup(){
         popupImage.src = this._link;
         popupHeaderActivityImage.textContent = this._name;
-        popupActiveImage.classList.add('popup_opened');
+        openPopup(popupActiveImage)
     }
     // Функция закрытия попапа по клику на крестик
     _hendleClosePopup(){
         popupImage.src = '';
         popupHeaderActivityImage.textContent = '';
-        popupActiveImage.classList.remove('popup_opened');
-    }
-    // Закрытие попапа по оверлей
-    _handleClosePopupOnOverlay(evt){
-        if(evt.target === evt.currentTarget){
-        this._hendleClosePopup()
-        }
-    }
-    // Закрытие попапа на Esc
-    _hendleClosePopupEsc(evt){
-        if(evt.key === 'Escape'){
-            this._hendleClosePopup()
-        }
+        closePopup(popupActiveImage)
     }
     // Функция удаления карточки
     _handleDeleteCard(){
