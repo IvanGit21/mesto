@@ -4,9 +4,9 @@ const popupExitButttonActivImage = document.querySelector('.popup__exit-button_a
 const popupHeaderActivityImage = document.querySelector('.popup__header_activity-image')
 
 export class Card {
-    constructor(data, cardSelector){
-        this._name = data.name;
-        this._link = data.link;
+    constructor(name,link, cardSelector){
+        this._name = name;
+        this._link = link;
         this._cardSelector = cardSelector;
     }
     // Получение шаблона карточки

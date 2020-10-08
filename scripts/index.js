@@ -1,5 +1,6 @@
 import {initialCards} from './arr.js'
 import {Card} from './Card.js'
+import {FormValidator} from './FormValidator.js'
 
 const editButton = document.querySelector('.edit-button');
 const formElementAdd = document.querySelector('.popup__form_add');
@@ -15,22 +16,34 @@ const addButton = document.querySelector('.add-button');
 const popupAdd = document.querySelector('.popup_add');
 const exitButtonAdd = document.querySelector('.popup__exit-button_add');
 const exitButtonEdit=document.querySelector('.popup__exit-button_edit');
-
-
-//Выгрузка корточек на страницу
-initialCards.forEach((item)=>{
-    const card = new Card(item, '#template-cards');
+const sectionCard = document.querySelector('.elements');
+const formElement = document.querySelector('.popup__form');
+const param = {
+    form: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active'
+}
+// Рендер карточек на страницу
+const renderCard = (name,link, cardSelector) =>{
+    const card = new Card(name,link, cardSelector);
     const cardElement = card.generateCard();
-    document.querySelector('.elements').prepend(cardElement)
+    sectionCard.prepend(cardElement)
+}
+//Выгрузка корточек на страницу из массива
+initialCards.forEach((item)=>{
+    renderCard(item.name,item.link, '#template-cards')
 })
-
+// Закрытие попапа по клику на оверлей
 const clickOverlayClose =(evt)=>{
     const popupOpened = document.querySelector('.popup_opened');
     if(evt.target === evt.currentTarget){
         closePopup(popupOpened);
     }
 }
-
+// Закрытие попапа по ESC
 const closePopupEsc = (evt) =>{
     const popupOpened = document.querySelector('.popup_opened');
     if(evt.key === 'Escape'){
@@ -38,19 +51,19 @@ const closePopupEsc = (evt) =>{
     }
 }
 
-
+// Функция открытия попапа
 const openPopup = (popup) => {
     popup.classList.add('popup_opened')
     popup.addEventListener('click',clickOverlayClose);
     document.addEventListener('keydown',closePopupEsc);
 }
-
+// Функция закрытия попапа
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened')
     popup.removeEventListener('click', clickOverlayClose);
     document.removeEventListener('keydown',closePopupEsc);
 }
-
+// Функция слушателей события
 const setEventListeners = () =>{
 addButton.addEventListener('click',() => openPopup(popupAdd));
 exitButtonAdd.addEventListener('click',() => closePopup(popupAdd));
@@ -64,7 +77,7 @@ setEventListeners();
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault(); 
 
-    renderCard(nameInputAdd.value,linkInputAdd.value);
+    renderCard(nameInputAdd.value,linkInputAdd.value, '#template-cards');
 
     closePopup(popupAdd);
 }
@@ -83,3 +96,6 @@ function formSubmitHandlerEdit (evt) {
 
 formElementEdit.addEventListener('submit', formSubmitHandlerEdit);
 
+// Включение полей валидации
+const card = new FormValidator(param, formElement);
+card.enableValidation();
