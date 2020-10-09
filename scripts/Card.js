@@ -53,7 +53,8 @@ export class Card {
     }
     // Функция удаления карточки
     _handleDeleteCard(){
-        this._element.remove()
+        this._element.remove();
+        delete this._element;
     }
 
 }

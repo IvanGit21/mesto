@@ -59,10 +59,6 @@ export class FormValidator {
         })
     }
     enableValidation(){
-        const formList = Array.from(document.querySelectorAll(this._form));
-
-        formList.forEach((formElement) =>{
-            this._setEventListeners(formElement);
-        })
+        this._setEventListeners(this._formSelector);
     }
 }

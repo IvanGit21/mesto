@@ -6,12 +6,12 @@ import {openPopup,closePopup} from './utils.js'
 const editButton = document.querySelector('.edit-button');
 const formElementAdd = document.querySelector('.popup__form_add');
 const formElementEdit = document.querySelector('.popup__form_edit');
-const nameInputAdd = document.querySelector('.popup__input_type_card-name');
-const linkInputAdd = document.querySelector('.popup__input_type_url');
-const nameInputEdit = document.querySelector('.popup__input_type_name');
-const jobInputEdit = document.querySelector('.popup__input_type_description');
-const profileName = document.querySelector('.profile__name');
-const profileActivity = document.querySelector('.profile__activity');
+export const nameInputAdd = document.querySelector('.popup__input_type_card-name');
+export const linkInputAdd = document.querySelector('.popup__input_type_url');
+export const nameInputEdit = document.querySelector('.popup__input_type_name');
+export const jobInputEdit = document.querySelector('.popup__input_type_description');
+export const profileName = document.querySelector('.profile__name');
+export const profileActivity = document.querySelector('.profile__activity');
 const popupEdit = document.querySelector('.popup_edit');
 const addButton = document.querySelector('.add-button');
 const popupAdd = document.querySelector('.popup_add');
@@ -47,6 +47,12 @@ exitButtonEdit.addEventListener('click',() => closePopup(popupEdit));
 
 setEventListeners();
 
+function addNameProfile(){
+    profileName.textContent = 'Жак-Ив-Кусто';
+    profileActivity.textContent = 'Исследователь океана';
+}
+addNameProfile();
+
 // Сабмит формы добавления
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault(); 
@@ -71,5 +77,8 @@ function formSubmitHandlerEdit (evt) {
 formElementEdit.addEventListener('submit', formSubmitHandlerEdit);
 
 // Включение полей валидации
-const card = new FormValidator(param, formElement);
-card.enableValidation();
+const formAdd = new FormValidator(param, formElementAdd);
+formAdd.enableValidation();
+
+const formEdit = new FormValidator(param, formElementEdit);
+formEdit.enableValidation();
