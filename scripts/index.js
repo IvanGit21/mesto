@@ -2,16 +2,12 @@ import {initialCards} from './arr.js'
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 import {openPopup,closePopup} from './utils.js'
+import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,cleanInput,addProfileValue,disabledButton} from './utils.js';
+import {param} from './utils.js'
 
 const editButton = document.querySelector('.edit-button');
 const formElementAdd = document.querySelector('.popup__form_add');
 const formElementEdit = document.querySelector('.popup__form_edit');
-export const nameInputAdd = document.querySelector('.popup__input_type_card-name');
-export const linkInputAdd = document.querySelector('.popup__input_type_url');
-export const nameInputEdit = document.querySelector('.popup__input_type_name');
-export const jobInputEdit = document.querySelector('.popup__input_type_description');
-export const profileName = document.querySelector('.profile__name');
-export const profileActivity = document.querySelector('.profile__activity');
 const popupEdit = document.querySelector('.popup_edit');
 const addButton = document.querySelector('.add-button');
 const popupAdd = document.querySelector('.popup_add');
@@ -19,14 +15,7 @@ const exitButtonAdd = document.querySelector('.popup__exit-button_add');
 const exitButtonEdit=document.querySelector('.popup__exit-button_edit');
 const sectionCard = document.querySelector('.elements');
 const formElement = document.querySelector('.popup__form');
-const param = {
-    form: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
-}
+
 // Рендер карточек на страницу
 const renderCard = (name,link, cardSelector) =>{
     const card = new Card(name,link, cardSelector);
@@ -40,8 +29,11 @@ initialCards.forEach((item)=>{
 // Функция слушателей события
 const setEventListeners = () =>{
 addButton.addEventListener('click',() => openPopup(popupAdd));
+addButton.addEventListener('click',() => cleanInput());
 exitButtonAdd.addEventListener('click',() => closePopup(popupAdd));
 editButton.addEventListener('click',() => openPopup(popupEdit));
+addButton.addEventListener('click',() => disabledButton())
+editButton.addEventListener('click',() => addProfileValue());
 exitButtonEdit.addEventListener('click',() => closePopup(popupEdit));
 }
 
