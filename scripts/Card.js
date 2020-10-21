@@ -56,5 +56,4 @@ export class Card {
         this._element.remove();
         delete this._element;
     }
-
 }
