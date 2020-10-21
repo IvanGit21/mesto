@@ -1,11 +1,6 @@
-import {openPopup,closePopup} from './utils.js'
-
-const popupImage = document.querySelector('.popup__image');
-const popupActiveImage = document.querySelector('.popup_activity-image');
-const popupExitButttonActivImage = document.querySelector('.popup__exit-button_activity-image');
-const popupHeaderActivityImage = document.querySelector('.popup__header_activity-image')
-
-export class Card {
+import {openPopup,closePopup} from '../utils/utils.js'
+import {popupImage, popupActiveImage, popupExitButttonActivImage, popupHeaderActivityImage} from '../utils/constants.js'
+export default class Card {
     constructor(name,link, cardSelector){
         this._name = name;
         this._link = link;

@@ -1,27 +1,8 @@
-import {initialCards} from '../utils/arr'
-import {Card} from './Card.js'
-import {FormValidator} from './FormValidator.js'
-import {openPopup,closePopup} from './utils.js'
-import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,cleanInput,addProfileValue,disabledButton} from './utils.js';
-import {param} from './utils.js'
+import FormValidator from '../components/FormValidator.js';
+import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,popupAdd,popupEdit,
+param,initialCards,addButton,exitButtonAdd,editButton,exitButtonEdit,formElementAdd,formElementEdit} from '../utils/constants.js'
+import {renderCard,openPopup,closePopup,addProfileValue,disabledButton,cleanInput} from '../utils/utils.js'
 
-const editButton = document.querySelector('.edit-button');
-const formElementAdd = document.querySelector('.popup__form_add');
-const formElementEdit = document.querySelector('.popup__form_edit');
-const popupEdit = document.querySelector('.popup_edit');
-const addButton = document.querySelector('.add-button');
-const popupAdd = document.querySelector('.popup_add');
-const exitButtonAdd = document.querySelector('.popup__exit-button_add');
-const exitButtonEdit=document.querySelector('.popup__exit-button_edit');
-const sectionCard = document.querySelector('.elements');
-const formElement = document.querySelector('.popup__form');
-
-// Рендер карточек на страницу
-const renderCard = (name,link, cardSelector) =>{
-    const card = new Card(name,link, cardSelector);
-    const cardElement = card.generateCard();
-    sectionCard.prepend(cardElement)
-}
 //Выгрузка корточек на страницу из массива
 initialCards.forEach((item)=>{
     renderCard(item.name,item.link, '#template-cards')

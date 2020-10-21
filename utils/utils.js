@@ -1,17 +1,10 @@
-export const nameInputAdd = document.querySelector('.popup__input_type_card-name');
-export const linkInputAdd = document.querySelector('.popup__input_type_url');
-export const nameInputEdit = document.querySelector('.popup__input_type_name');
-export const jobInputEdit = document.querySelector('.popup__input_type_description');
-export const profileName = document.querySelector('.profile__name');
-export const profileActivity = document.querySelector('.profile__activity');
-const buttonElement = document.querySelector('.popup__button_add');
-export const param = {
-    form: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
+import Card from '../components/Card.js';
+import {sectionCard,nameInputEdit,jobInputEdit,profileName,profileActivity,nameInputAdd,linkInputAdd,buttonElement,param} from '../utils/constants.js'
+// Рендер карточек на страницу
+export const renderCard = (name,link, cardSelector) =>{
+    const card = new Card(name,link, cardSelector);
+    const cardElement = card.generateCard();
+    sectionCard.prepend(cardElement)
 }
 
 // Закрытие попапа по клику на оверлей
