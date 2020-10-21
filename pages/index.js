@@ -1,4 +1,4 @@
-import {initialCards} from './arr.js'
+import {initialCards} from '../utils/arr'
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 import {openPopup,closePopup} from './utils.js'
