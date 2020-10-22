@@ -1,12 +1,4 @@
-import Card from '../components/Card.js';
-import {sectionCard,nameInputEdit,jobInputEdit,profileName,profileActivity,nameInputAdd,linkInputAdd,buttonElement,param} from '../utils/constants.js'
-// Рендер карточек на страницу
-export const renderCard = (name,link, cardSelector) =>{
-    const card = new Card(name,link, cardSelector);
-    const cardElement = card.generateCard();
-    sectionCard.prepend(cardElement)
-}
-
+import {nameInputEdit,jobInputEdit,profileName,profileActivity,nameInputAdd,linkInputAdd,buttonElement,param} from '../utils/constants.js';
 // Закрытие попапа по клику на оверлей
 export const clickOverlayClose =(evt)=>{
     const popupOpened = document.querySelector('.popup_opened');

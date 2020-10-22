@@ -6,7 +6,6 @@ export const addButton = document.querySelector('.add-button');
 export const popupAdd = document.querySelector('.popup_add');
 export const exitButtonAdd = document.querySelector('.popup__exit-button_add');
 export const exitButtonEdit=document.querySelector('.popup__exit-button_edit');
-export const sectionCard = document.querySelector('.elements');
 export const formElement = document.querySelector('.popup__form');
 export const popupImage = document.querySelector('.popup__image');
 export const popupActiveImage = document.querySelector('.popup_activity-image');

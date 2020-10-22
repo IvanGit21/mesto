@@ -1,12 +1,10 @@
 import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
 import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,popupAdd,popupEdit,
-param,initialCards,addButton,exitButtonAdd,editButton,exitButtonEdit,formElementAdd,formElementEdit} from '../utils/constants.js'
-import {renderCard,openPopup,closePopup,addProfileValue,disabledButton,cleanInput} from '../utils/utils.js'
+param,addButton,exitButtonAdd,editButton,exitButtonEdit,formElementAdd,formElementEdit,initialCards} from '../utils/constants.js'
+import {openPopup,closePopup,addProfileValue,disabledButton,cleanInput} from '../utils/utils.js';
 
-//Выгрузка корточек на страницу из массива
-initialCards.forEach((item)=>{
-    renderCard(item.name,item.link, '#template-cards')
-})
 // Функция слушателей события
 const setEventListeners = () =>{
 addButton.addEventListener('click',() => openPopup(popupAdd));
@@ -29,9 +27,12 @@ addNameProfile();
 // Сабмит формы добавления
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault(); 
-
-    renderCard(nameInputAdd.value,linkInputAdd.value, '#template-cards');
-
+    const cardItem = new Section({items: [{name:nameInputAdd.value, link:linkInputAdd.value}], renderer:(item)=>{
+        const card = new Card(item, '#template-cards');
+        const cardElement = card.generateCard();
+        cardItem.addItem(cardElement);
+}}, '.elements');
+    cardItem.renderItems()
     closePopup(popupAdd);
 }
 
@@ -55,3 +56,12 @@ formAdd.enableValidation();
 
 const formEdit = new FormValidator(param, formElementEdit);
 formEdit.enableValidation();
+
+// Создание карточек
+const cardList = new Section({items: initialCards, renderer:(item)=>{
+        const card = new Card(item, '#template-cards');
+        const cardElement = card.generateCard();
+        cardList.addItem(cardElement);
+}}, '.elements');
+
+cardList.renderItems();

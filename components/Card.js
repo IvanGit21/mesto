@@ -1,7 +1,7 @@
 import {openPopup,closePopup} from '../utils/utils.js'
 import {popupImage, popupActiveImage, popupExitButttonActivImage, popupHeaderActivityImage} from '../utils/constants.js'
 export default class Card {
-    constructor(name,link, cardSelector){
+    constructor({name, link}, cardSelector){
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
