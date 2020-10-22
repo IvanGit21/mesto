@@ -1,31 +1,31 @@
 import {nameInputEdit,jobInputEdit,profileName,profileActivity,nameInputAdd,linkInputAdd,buttonElement,param} from '../utils/constants.js';
 // Закрытие попапа по клику на оверлей
-export const clickOverlayClose =(evt)=>{
-    const popupOpened = document.querySelector('.popup_opened');
-    if(evt.target === evt.currentTarget){
-        closePopup(popupOpened);
-    }
-}
-// Закрытие попапа по ESC
-export const closePopupEsc = (evt) =>{
-    const popupOpened = document.querySelector('.popup_opened');
-    if(evt.key === 'Escape'){
-        closePopup(popupOpened);
-    }
-}
+// export const clickOverlayClose =(evt)=>{
+//     const popupOpened = document.querySelector('.popup_opened');
+//     if(evt.target === evt.currentTarget){
+//         closePopup(popupOpened);
+//     }
+// }
+// // Закрытие попапа по ESC
+// export const closePopupEsc = (evt) =>{
+//     const popupOpened = document.querySelector('.popup_opened');
+//     if(evt.key === 'Escape'){
+//         closePopup(popupOpened);
+//     }
+// }
 
-// Функция открытия попапа
-export const openPopup = (popup) => {
-    popup.classList.add('popup_opened')
-    popup.addEventListener('click',clickOverlayClose);
-    document.addEventListener('keydown',closePopupEsc);
-}
-// Функция закрытия попапа
-export const closePopup = (popup) => {
-    popup.classList.remove('popup_opened')
-    popup.removeEventListener('click', clickOverlayClose);
-    document.removeEventListener('keydown',closePopupEsc);
-}
+// // Функция открытия попапа
+// export const openPopup = (popup) => {
+//     popup.classList.add('popup_opened')
+//     popup.addEventListener('click',clickOverlayClose);
+//     document.addEventListener('keydown',closePopupEsc);
+// }
+// // Функция закрытия попапа
+// export const closePopup = (popup) => {
+//     popup.classList.remove('popup_opened')
+//     popup.removeEventListener('click', clickOverlayClose);
+//     document.removeEventListener('keydown',closePopupEsc);
+// }
 export function cleanInput(){
     nameInputAdd.value = '';
     linkInputAdd.value = '';

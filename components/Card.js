@@ -1,5 +1,5 @@
-import {openPopup,closePopup} from '../utils/utils.js'
-import {popupImage, popupActiveImage, popupExitButttonActivImage, popupHeaderActivityImage} from '../utils/constants.js'
+// import {openPopup,closePopup} from '../utils/utils.js'
+import {popupImage, popupActiveImage, popupExitButttonActivImage, popupHeaderActivityImage,popupAdd} from '../utils/constants.js'
 export default class Card {
     constructor({name, link}, cardSelector){
         this._name = name;
@@ -44,6 +44,7 @@ export default class Card {
     _hendleClosePopup(){
         popupImage.src = '';
         popupHeaderActivityImage.textContent = '';
+        popupAdd.close()
         closePopup(popupActiveImage)
     }
     // Функция удаления карточки

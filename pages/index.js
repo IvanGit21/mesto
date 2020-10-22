@@ -1,22 +1,23 @@
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
-import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,popupAdd,popupEdit,
-param,addButton,exitButtonAdd,editButton,exitButtonEdit,formElementAdd,formElementEdit,initialCards} from '../utils/constants.js'
-import {openPopup,closePopup,addProfileValue,disabledButton,cleanInput} from '../utils/utils.js';
+import Popup from '../components/Popup.js';
+import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,
+param,addButton,exitButtonAdd,editButton,exitButtonEdit,formElementAdd,formElementEdit,initialCards} from '../utils/constants.js';
+import {addProfileValue,disabledButton,cleanInput} from '../utils/utils.js';
 
 // Функция слушателей события
-const setEventListeners = () =>{
-addButton.addEventListener('click',() => openPopup(popupAdd));
+const hendleEventListeners = () =>{
+addButton.addEventListener('click',() => popupAdd.open());
 addButton.addEventListener('click',() => cleanInput());
-exitButtonAdd.addEventListener('click',() => closePopup(popupAdd));
-editButton.addEventListener('click',() => openPopup(popupEdit));
+exitButtonAdd.addEventListener('click',() => popupAdd.close())
+editButton.addEventListener('click',() => popupEdit.open());
 addButton.addEventListener('click',() => disabledButton())
 editButton.addEventListener('click',() => addProfileValue());
-exitButtonEdit.addEventListener('click',() => closePopup(popupEdit));
+exitButtonEdit.addEventListener('click',() => popupEdit.close());
 }
 
-setEventListeners();
+hendleEventListeners();
 
 function addNameProfile(){
     profileName.textContent = 'Жак-Ив-Кусто';
@@ -33,7 +34,7 @@ function formSubmitHandlerAdd (evt) {
         cardItem.addItem(cardElement);
 }}, '.elements');
     cardItem.renderItems()
-    closePopup(popupAdd);
+    popupAdd.close();
 }
 
 formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
@@ -45,7 +46,7 @@ function formSubmitHandlerEdit (evt) {
     profileName.textContent = nameInputEdit.value;
     profileActivity.textContent = jobInputEdit.value;
 
-    closePopup(popupEdit);
+    popupEdit.close();
 }
 
 formElementEdit.addEventListener('submit', formSubmitHandlerEdit);
@@ -65,3 +66,7 @@ const cardList = new Section({items: initialCards, renderer:(item)=>{
 }}, '.elements');
 
 cardList.renderItems();
+// Создание попап классов
+const popupAdd = new Popup('.popup_add');
+const popupEdit = new Popup('.popup_edit');
+
