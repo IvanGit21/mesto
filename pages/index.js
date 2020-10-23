@@ -2,19 +2,18 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import {linkInputAdd,nameInputAdd,nameInputEdit,jobInputEdit,profileName,profileActivity,
-param,addButton,exitButtonAdd,editButton,exitButtonEdit,formElementAdd,formElementEdit,initialCards} from '../utils/constants.js';
+param,addButton,editButton,formElementAdd,formElementEdit,initialCards} from '../utils/constants.js';
 import {addProfileValue,disabledButton,cleanInput} from '../utils/utils.js';
 
 // Функция слушателей события
 const hendleEventListeners = () =>{
-addButton.addEventListener('click',() => popupAdd.open());
+addButton.addEventListener('click',() => popupAdd.open())
 addButton.addEventListener('click',() => cleanInput());
-exitButtonAdd.addEventListener('click',() => popupAdd.close())
 editButton.addEventListener('click',() => popupEdit.open());
 addButton.addEventListener('click',() => disabledButton())
 editButton.addEventListener('click',() => addProfileValue());
-exitButtonEdit.addEventListener('click',() => popupEdit.close());
 }
 
 hendleEventListeners();
@@ -60,13 +59,15 @@ formEdit.enableValidation();
 
 // Создание карточек
 const cardList = new Section({items: initialCards, renderer:(item)=>{
-        const card = new Card(item, '#template-cards');
-        const cardElement = card.generateCard();
-        cardList.addItem(cardElement);
+    const cardImage = new PopupWithImage(item,'.popup_activity-image');
+    const card = new Card({item:item,handleOpenPopup:cardImage.open}, '#template-cards');
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
 }}, '.elements');
 
 cardList.renderItems();
-// Создание попап классов
+// Создание попапов
 const popupAdd = new Popup('.popup_add');
-const popupEdit = new Popup('.popup_edit');
-
+const popupEdit = new Popup('.popup_add');
+popupAdd.setEventListeners();
+popupEdit.setEventListeners();

@@ -15,4 +15,13 @@ export default class Popup{
         this.close()
         }
     }
+    setEventListeners(){
+        this._popupSelector.addEventListener('click',(evt)=>{
+            if(evt.target.classList.contains('popup__exit-button')){
+                this.close()
+            }else if(evt.target === evt.currentTarget){
+                this.close()
+            }
+        })
+    }
 }
