@@ -72,3 +72,4 @@ const popupEdit = new Popup('.popup_add');
 const popupWithImage = new Popup('.popup_activity-image')
 popupAdd.setEventListeners();
 popupEdit.setEventListeners();
+popupWithImage.setEventListeners();
