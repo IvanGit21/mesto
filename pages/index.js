@@ -57,10 +57,10 @@ formAdd.enableValidation();
 const formEdit = new FormValidator(param, formElementEdit);
 formEdit.enableValidation();
 
-// Создание карточек
+// Создание карточек из массива
 const cardList = new Section({items: initialCards, renderer:(item)=>{
     const cardImage = new PopupWithImage(item,'.popup_activity-image');
-    const card = new Card({item:item,handleOpenPopup:cardImage.open}, '#template-cards');
+    const card = new Card({item:item,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
     const cardElement = card.generateCard();
     cardList.addItem(cardElement);
 }}, '.elements');

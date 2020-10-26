@@ -1,3 +1,5 @@
+import Popup from "./Popup.js";
+
 export default class Card {
     constructor({item,handleOpenPopup}, cardSelector){
         this._name = item.name;
@@ -25,7 +27,7 @@ export default class Card {
     // Функция добавления обработчика событий
     _setEventListeners(){
         this._element.querySelector('.grope-button').addEventListener('click', ()=> this._handleLikeIcon());
-        this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup());
+        this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup())
         this._element.querySelector('.element__del-button').addEventListener('click', ()=>{this._handleDeleteCard()});
     }
     // Функция переключения кнопки лайка
