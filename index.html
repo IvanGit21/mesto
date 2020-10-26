@@ -33,7 +33,7 @@
                     <form class="popup__form popup__form_edit" name="form-edit" novalidate>
                         <h2 class="popup__header">Редактировать профиль</h2>
                         <fieldset class="popup__input-container">
-                            <input neme="name" type="text" required minlength="2" maxlength="40" value="" placeholder="Имя" class="popup__input popup__input_type_name" id="name-input">
+                            <input name="name" type="text" required minlength="2" maxlength="40" value="" placeholder="Имя" class="popup__input popup__input_type_name" id="name-input">
                             <span id="name-input-error" class="popup__input-error"></span>
                             <input name="description" type="text" required minlength="2" maxlength="200" value="" placeholder="О себе" class="popup__input popup__input_type_description" id="description-input">
                             <span id="description-input-error" class="popup__input-error"></span>
@@ -48,9 +48,9 @@
                     <form class="popup__form popup__form_add" name="form-add" novalidate>
                         <h2 class="popup__header">Новое место</h2>
                         <fieldset class="popup__input-container">
-                            <input name="card-name" type="text" required minlength="2" maxlength="30" value="" placeholder="Название" class="popup__input popup__input_type_card-name" id="card-name-input">
+                            <input name="name" type="text" required minlength="2" maxlength="30" value="" placeholder="Название" class="popup__input popup__input_type_card-name" id="card-name-input">
                             <span id="card-name-input-error" class="popup__input-error"></span>
-                            <input name="url" type="url" required value="" placeholder="Ссылка на картинку" class="popup__input popup__input_type_url" id="url-input">
+                            <input name="link" type="url" required value="" placeholder="Ссылка на картинку" class="popup__input popup__input_type_url" id="url-input">
                             <span id="url-input-error" class="popup__input-error"></span>
                         </fieldset>
                         <button type="submit" class="popup__button popup__button_add" ria-label="Кнопка создания">Создать</button>

@@ -3,6 +3,7 @@ export default class Section{
         this._renderedItems = items;
         this._renderer = renderer;
         this._containerSelector = document.querySelector(containerSelector);
+        
     }
     // Добавление элемента в ДОМ
     addItem(element){
