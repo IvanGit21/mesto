@@ -3,28 +3,26 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js'
-import {profileName,profileActivity,
-param,addButton,editButton,formElementAdd,formElementEdit,initialCards} from '../utils/constants.js';
-import {addProfileValue,disabledButton} from '../utils/utils.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import {param,addButton,editButton,formElementAdd,formElementEdit,initialCards,nameInputEdit,jobInputEdit} from '../utils/constants.js';
+import {disabledButton} from '../utils/utils.js';
 
 // Функция слушателей события
 const hendleEventListeners = () =>{
-addButton.addEventListener('click',() => {
-    popupAdd.open();
-    disabledButton();
+    addButton.addEventListener('click',() => {
+        popupAdd.open();
+        disabledButton();
 })
-editButton.addEventListener('click',() => popupEdit.open());
-editButton.addEventListener('click',() => addProfileValue());
+    editButton.addEventListener('click',() =>{
+        popupEdit.open();
+        disabledButton();
+        nameInputEdit.value = user.getUserInfo().name;
+        jobInputEdit.value = user.getUserInfo().description;
+    })
 }
 
 hendleEventListeners();
-
-function addNameProfile(){
-    profileName.textContent = 'Жак-Ив-Кусто';
-    profileActivity.textContent = 'Исследователь океана';
-}
-addNameProfile();
 
 // Включение полей валидации
 const formAdd = new FormValidator(param, formElementAdd);
@@ -54,7 +52,8 @@ const submitFormAdd = new PopupWithForm({
     popupSelector: '.popup_add',
     formSubmit:'.popup__form_add',
     handleFormSubmit:(formData)=>{
-        const card = new Card({item:formData}, '#template-cards');
+        const cardImage = new PopupWithImage(formData,'.popup_activity-image');
+        const card = new Card({item:formData,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
     }
@@ -65,8 +64,13 @@ const submitFormEdit = new PopupWithForm({
     popupSelector: '.popup_edit',
     formSubmit:'.popup__form_edit',
     handleFormSubmit:(formData)=>{
-        profileName.textContent = formData.name;
-        profileActivity.textContent = formData.description;
+        user.setUserInfo(formData.name,formData.description);
+        console.log(user.getUserInfo())
     }
 })
 submitFormEdit.setEventListeners()
+
+// Создание UserInfo
+const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity'});
+user.setUserInfo('Жак-Ив-Кусто','Исследователь океана');
+console.log(user.getUserInfo())

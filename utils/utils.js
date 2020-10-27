@@ -1,10 +1,6 @@
-import {nameInputEdit,jobInputEdit,profileName,profileActivity,buttonElement,param} from '../utils/constants.js';
+import {submitButton,param} from '../utils/constants.js';
 
-export function addProfileValue(){
-    nameInputEdit.value = profileName.textContent; 
-    jobInputEdit.value = profileActivity.textContent; 
-}
 export function disabledButton(){
-    buttonElement.setAttribute('disabled',true);
-    buttonElement.classList.add(param.inactiveButtonClass);
+    submitButton.setAttribute('disabled',true);
+    submitButton.classList.add(param.inactiveButtonClass);
 }
