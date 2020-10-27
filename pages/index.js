@@ -65,7 +65,6 @@ const submitFormEdit = new PopupWithForm({
     formSubmit:'.popup__form_edit',
     handleFormSubmit:(formData)=>{
         user.setUserInfo(formData.name,formData.description);
-        console.log(user.getUserInfo())
     }
 })
 submitFormEdit.setEventListeners()
@@ -73,4 +72,3 @@ submitFormEdit.setEventListeners()
 // Создание UserInfo
 const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity'});
 user.setUserInfo('Жак-Ив-Кусто','Исследователь океана');
-console.log(user.getUserInfo())
