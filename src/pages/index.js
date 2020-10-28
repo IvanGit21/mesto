@@ -1,3 +1,4 @@
+import './index.css'
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
@@ -16,7 +17,6 @@ const hendleEventListeners = () =>{
 })
     editButton.addEventListener('click',() =>{
         popupEdit.open();
-        disabledButton();
         nameInputEdit.value = user.getUserInfo().name;
         jobInputEdit.value = user.getUserInfo().description;
     })

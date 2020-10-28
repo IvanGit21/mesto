@@ -17,8 +17,7 @@ export const nameInputEdit = document.querySelector('.popup__input_type_name');
 export const jobInputEdit = document.querySelector('.popup__input_type_description');
 export const profileName = document.querySelector('.profile__name');
 export const profileActivity = document.querySelector('.profile__activity');
-export const buttonElement = document.querySelector('.popup__button_add');
-export const submitButton = document.querySelector('.popup__button')
+export const buttonAdd = document.querySelector('.popup__button_add');
 export const param = {
     form: '.popup__form',
     inputSelector: '.popup__input',

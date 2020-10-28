@@ -1,6 +1,6 @@
-import {submitButton,param} from '../utils/constants.js';
+import {buttonAdd,param} from '../utils/constants.js';
 
 export function disabledButton(){
-    submitButton.setAttribute('disabled',true);
-    submitButton.classList.add(param.inactiveButtonClass);
+    buttonAdd.setAttribute('disabled',true);
+    buttonAdd.classList.add(param.inactiveButtonClass);
 }
