@@ -16,4 +16,17 @@ export default class Api{
           .then((res) => res)
     }
 
+    getProfileInfo(){
+        return fetch(`${this._baseUrl}/users/me`,{
+            headers: this._headers
+        })
+        .then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+          })
+          .then((res) => res)
+    }
+
 }

@@ -62,22 +62,35 @@ const submitFormEdit = new PopupWithForm({
 submitFormEdit.setEventListeners()
 
 // Создание UserInfo
-const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity'});
-user.setUserInfo('Жак-Ив-Кусто','Исследователь океана');
+const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});
 
-// Слздание карточек с сервера
+// Создание экземпляра Api
 const api = new Api({
     baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
         headers: {
             authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8'
         }
 });
-const cards = api.getInitialCards().then((res)=>{
+// Создание карточек с сервера
+const cards = api.getInitialCards()
+.then((res)=>{
     cardList.renderItems(res)
-});
+})
+.catch((err)=>{
+    console.log(err)
+})
 const cardList =  new Section({items: cards, renderer:(item)=>{
         const cardImage = new PopupWithImage(item,'.popup_activity-image');
         const card = new Card({item:item,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
     }}, '.elements');
+
+// Запрос информации о пользователе
+api.getProfileInfo()
+.then((res)=>{
+    user.setUserInfo(res.name, res.about, res.avatar);
+})
+.catch((err)=>{
+    console.log(err)
+})
