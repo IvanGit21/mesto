@@ -6,6 +6,7 @@ import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import {param,addButton,editButton,formElementAdd,formElementEdit,initialCards,nameInputEdit,jobInputEdit} from '../utils/constants.js';
 import {disabledButton} from '../utils/utils.js';
 
@@ -31,15 +32,6 @@ formAdd.enableValidation();
 const formEdit = new FormValidator(param, formElementEdit);
 formEdit.enableValidation();
 
-// Создание карточек из массива
-const cardList = new Section({items: initialCards, renderer:(item)=>{
-    const cardImage = new PopupWithImage(item,'.popup_activity-image');
-    const card = new Card({item:item,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-}}, '.elements');
-
-cardList.renderItems();
 // Создание попапов
 const popupAdd = new Popup('.popup_add');
 const popupEdit = new Popup('.popup_edit');
@@ -72,3 +64,20 @@ submitFormEdit.setEventListeners()
 // Создание UserInfo
 const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity'});
 user.setUserInfo('Жак-Ив-Кусто','Исследователь океана');
+
+// Слздание карточек с сервера
+const api = new Api({
+    baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
+        headers: {
+            authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8'
+        }
+});
+const cards = api.getInitialCards().then((res)=>{
+    cardList.renderItems(res)
+});
+const cardList =  new Section({items: cards, renderer:(item)=>{
+        const cardImage = new PopupWithImage(item,'.popup_activity-image');
+        const card = new Card({item:item,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
+        const cardElement = card.generateCard();
+        cardList.addItem(cardElement);
+    }}, '.elements');

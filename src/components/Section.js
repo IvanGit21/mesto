@@ -10,8 +10,8 @@ export default class Section{
         this._containerSelector.prepend(element);
     }
     // Перебор элементов и добавление
-    renderItems(){
-        this._renderedItems.forEach(item =>{
+    renderItems(array){
+        array.forEach(item =>{
             this._renderer(item)
         })
     }
