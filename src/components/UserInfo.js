@@ -7,7 +7,7 @@ export default class UserInfo{
     getUserInfo(){
         this._infoList = {};
         this._infoList['name'] = this._nameSelector.textContent;
-        this._infoList['description'] = this._descriptionSelector.textContent;
+        this._infoList['about'] = this._descriptionSelector.textContent;
         this._infoList['avatar'] = this._imageSelector.src;
         
         return this._infoList;

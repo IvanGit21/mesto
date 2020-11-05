@@ -19,7 +19,7 @@ const hendleEventListeners = () =>{
     editButton.addEventListener('click',() =>{
         popupEdit.open();
         nameInputEdit.value = user.getUserInfo().name;
-        jobInputEdit.value = user.getUserInfo().description;
+        jobInputEdit.value = user.getUserInfo().about;
     })
 }
 
@@ -51,15 +51,6 @@ const submitFormAdd = new PopupWithForm({
     }
 })
 submitFormAdd.setEventListeners();
-// Создание форм сабмита редактирования
-const submitFormEdit = new PopupWithForm({
-    popupSelector: '.popup_edit',
-    formSubmit:'.popup__form_edit',
-    handleFormSubmit:(formData)=>{
-        user.setUserInfo(formData.name,formData.description);
-    }
-})
-submitFormEdit.setEventListeners()
 
 // Создание UserInfo
 const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});
@@ -94,3 +85,24 @@ api.getProfileInfo()
 .catch((err)=>{
     console.log(err)
 })
+
+// Создание форм сабмита редактирования
+const submitFormEdit = new PopupWithForm({
+    popupSelector: '.popup_edit',
+    formSubmit:'.popup__form_edit',
+    handleFormSubmit:(formData)=>{
+        const newApi = new Api({
+            baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
+                headers: {
+                    authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
+                    'Content-Type': 'application/json'
+                },
+                body:formData
+        })
+        newApi.dispatchProfileInfo()
+        .then((res)=>{
+            user.setUserInfo(res.name, res.about, res.avatar)
+        })
+    }
+})
+submitFormEdit.setEventListeners()
