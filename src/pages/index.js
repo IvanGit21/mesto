@@ -7,9 +7,8 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
-import {param,addButton,editButton,formElementAdd,formElementEdit,initialCards,nameInputEdit,jobInputEdit} from '../utils/constants.js';
+import {param,addButton,editButton,formElementAdd,formElementEdit,nameInputEdit,jobInputEdit} from '../utils/constants.js';
 import {disabledButton} from '../utils/utils.js';
-
 // Функция слушателей события
 const hendleEventListeners = () =>{
     addButton.addEventListener('click',() => {
@@ -53,7 +52,7 @@ const api = new Api({
 // Создание карточек с сервера
 const cards = api.getInitialCards()
 .then((res)=>{
-    cardList.renderItems(res)
+    cardList.renderItems(res);
 })
 .catch((err)=>{
     console.log(err)

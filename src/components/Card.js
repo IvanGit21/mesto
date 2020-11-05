@@ -2,6 +2,7 @@ export default class Card {
     constructor({item,handleOpenPopup}, cardSelector){
         this._name = item.name;
         this._link = item.link;
+        this._like = item.likes;
         this._handleOpenPopup = handleOpenPopup;
         this._cardSelector = cardSelector;
     }
@@ -18,6 +19,7 @@ export default class Card {
         this._element = this._getTemplate();
         this._setEventListeners();
         this._element.querySelector('.element__title').textContent = this._name;
+        this._element.querySelector('.grope-counter').textContent = this._like.length;
         this._element.querySelector('.element__image').src = this._link;
 
         return this._element;
