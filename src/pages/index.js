@@ -39,18 +39,6 @@ const popupWithImage = new Popup('.popup_activity-image')
 popupAdd.setEventListeners();
 popupEdit.setEventListeners();
 popupWithImage.setEventListeners();
-// Создание форм сабмита добавления
-const submitFormAdd = new PopupWithForm({
-    popupSelector: '.popup_add',
-    formSubmit:'.popup__form_add',
-    handleFormSubmit:(formData)=>{
-        const cardImage = new PopupWithImage(formData,'.popup_activity-image');
-        const card = new Card({item:formData,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
-        const cardElement = card.generateCard();
-        cardList.addItem(cardElement);
-    }
-})
-submitFormAdd.setEventListeners();
 
 // Создание UserInfo
 const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});
@@ -105,4 +93,27 @@ const submitFormEdit = new PopupWithForm({
         })
     }
 })
-submitFormEdit.setEventListeners()
+submitFormEdit.setEventListeners();
+// Создание форм сабмита добавления
+const submitFormAdd = new PopupWithForm({
+    popupSelector: '.popup_add',
+    formSubmit:'.popup__form_add',
+    handleFormSubmit:(formData)=>{
+        const newApi = new Api({
+            baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
+                headers: {
+                    authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
+                    'Content-Type': 'application/json'
+                },
+                body:formData
+        })
+        newApi.createNewCard()
+        .then((res)=>{
+            const cardImage = new PopupWithImage(res,'.popup_activity-image');
+            const card = new Card({item:res,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
+            const cardElement = card.generateCard();
+            cardList.addItem(cardElement);
+        })
+    }
+})
+submitFormAdd.setEventListeners();

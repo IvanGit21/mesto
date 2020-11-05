@@ -43,7 +43,19 @@ export default class Api{
             return Promise.reject(`Ошибка: ${res.status}`);
           })
           .then((res) => res)
-        
     }
-
+    createNewCard(){
+      return fetch(`${this._baseUrl}/cards`,{
+          method: 'POST',
+          headers: this._headers,
+          body: JSON.stringify(this._body)
+      })
+      .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .then((res) => res)
+  }
 }
