@@ -17,7 +17,6 @@ export default class Api{
           })
           .then((res) => res)
     }
-
     getProfileInfo(){
         return fetch(`${this._baseUrl}/users/me`,{
             headers: this._headers
@@ -64,6 +63,34 @@ export default class Api{
         headers: this._headers,
     })
     .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((res) => res)
+    }
+
+    setLike(cardId){
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`,{
+        method: 'PUT',
+        headers: this._headers,
+    })
+    .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((res) => res)
+    }
+
+    removeLike(cardId){
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`,{
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then(res => {
         if (res.ok) {
           return res.json();
         }

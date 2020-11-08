@@ -62,16 +62,26 @@ const cards = api.getInitialCards()
 })
 const cardList =  new Section({items: cards, renderer:(item)=>{
         const cardImage = new PopupWithImage(item,'.popup_activity-image');
-        const card = new Card({item:item,
+        const card = new Card({
+            item:item,
             handleOpenPopup:cardImage.open.bind(cardImage),
             hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
             setListener: confirmPopup.setEventListeners.bind(confirmPopup),
+            setLike:api.setLike.bind(api),
+            removeLike:api.removeLike.bind(api),
+            getCardInfo:api.getInitialCards.bind(api)
         }, '#template-cards');
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
 }}, '.elements');
+
 // Создание экземпляра подтверждения
-const confirmPopup = new PopupWithSubmit({handleDeleteCard: api.deleteCard.bind(api)}, '.popup_type_delete', '.popup__button_type_delete');
+const confirmPopup = new PopupWithSubmit({
+    handleDeleteCard: api.deleteCard.bind(api)},
+    '.popup_type_delete',
+    '.popup__button_type_delete'
+);
+
 // Запрос информации о пользователе
 api.getProfileInfo()
 .then((res)=>{
@@ -122,6 +132,8 @@ const submitFormAdd = new PopupWithForm({
                 item:res,handleOpenPopup:cardImage.open.bind(cardImage),
                 hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
                 setListener: confirmPopup.setEventListeners.bind(confirmPopup),
+                handleLikeClick:api.setLike.bind(api),
+                removeLike:api.removeLike.bind(api),
             },'#template-cards');
             const cardElement = card.generateCard();
             cardList.addItem(cardElement);
