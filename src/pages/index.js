@@ -7,6 +7,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import {param,addButton,editButton,formElementAdd,formElementEdit,nameInputEdit,jobInputEdit} from '../utils/constants.js';
 import {disabledButton} from '../utils/utils.js';
 // Функция слушателей события
@@ -34,10 +35,12 @@ formEdit.enableValidation();
 // Создание попапов
 const popupAdd = new Popup('.popup_add');
 const popupEdit = new Popup('.popup_edit');
-const popupWithImage = new Popup('.popup_activity-image')
+const popupWithImage = new Popup('.popup_activity-image');
+const popupDelete = new Popup('.popup_type_delete')
 popupAdd.setEventListeners();
 popupEdit.setEventListeners();
 popupWithImage.setEventListeners();
+popupDelete.setEventListeners();
 
 // Создание UserInfo
 const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});
@@ -59,11 +62,16 @@ const cards = api.getInitialCards()
 })
 const cardList =  new Section({items: cards, renderer:(item)=>{
         const cardImage = new PopupWithImage(item,'.popup_activity-image');
-        const card = new Card({item:item,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
+        const card = new Card({item:item,
+            handleOpenPopup:cardImage.open.bind(cardImage),
+            hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
+            setListener: confirmPopup.setEventListeners.bind(confirmPopup),
+        }, '#template-cards');
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
-    }}, '.elements');
-
+}}, '.elements');
+// Создание экземпляра подтверждения
+const confirmPopup = new PopupWithSubmit({handleDeleteCard: api.deleteCard.bind(api)}, '.popup_type_delete', '.popup__button_type_delete');
 // Запрос информации о пользователе
 api.getProfileInfo()
 .then((res)=>{
@@ -93,6 +101,7 @@ const submitFormEdit = new PopupWithForm({
     }
 })
 submitFormEdit.setEventListeners();
+
 // Создание форм сабмита добавления
 const submitFormAdd = new PopupWithForm({
     popupSelector: '.popup_add',
@@ -109,7 +118,11 @@ const submitFormAdd = new PopupWithForm({
         newApi.createNewCard()
         .then((res)=>{
             const cardImage = new PopupWithImage(res,'.popup_activity-image');
-            const card = new Card({item:res,handleOpenPopup:cardImage.open.bind(cardImage)}, '#template-cards');
+            const card = new Card({
+                item:res,handleOpenPopup:cardImage.open.bind(cardImage),
+                hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
+                setListener: confirmPopup.setEventListeners.bind(confirmPopup),
+            },'#template-cards');
             const cardElement = card.generateCard();
             cardList.addItem(cardElement);
         })

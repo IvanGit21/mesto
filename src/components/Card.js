@@ -1,10 +1,22 @@
 export default class Card {
-    constructor({item,handleOpenPopup}, cardSelector){
+    constructor({item, handleOpenPopup, hendleOpenPopupDel, setListener}, cardSelector){
         this._name = item.name;
         this._link = item.link;
         this._like = item.likes;
+        this._owner = item.owner._id;
+        this._cardId = item._id;
         this._handleOpenPopup = handleOpenPopup;
+        this._handleOpenPopupDel = hendleOpenPopupDel;
         this._cardSelector = cardSelector;
+        this._setListener = setListener;
+    }
+    // Сортировка состояния иконки удаления
+    _iconState(){
+        if(this._owner === 'bea70c3bd52a4fe09217cba6'){
+            return 'block'
+        }else{
+            return 'none'
+        }
     }
     // Получение шаблона карточки
     _getTemplate(){
@@ -27,15 +39,19 @@ export default class Card {
     // Функция добавления обработчика событий
     _setEventListeners(){
         this._element.querySelector('.grope-button').addEventListener('click', ()=> this._handleLikeIcon());
-        this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup())
-        this._element.querySelector('.element__del-button').addEventListener('click', ()=>{this._handleDeleteCard()});
+        this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup());
+        this._element.querySelector('.element__del-button').style.display = this._iconState();
+        this._element.querySelector('.element__del-button').addEventListener('click', ()=> {
+            this._handleOpenPopupDel();
+            this._setListener(this._cardId,this._deleteCard.bind(this))
+        });
     }
     // Функция переключения кнопки лайка
     _handleLikeIcon(){
     this._element.querySelector('.grope-button').classList.toggle('grope-button_active');
     }
     // Функция удаления карточки
-    _handleDeleteCard(){
+    _deleteCard(){
         this._element.remove();
         delete this._element;
     }
