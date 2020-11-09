@@ -8,8 +8,8 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
-import {param,addButton,editButton,formElementAdd,formElementEditAvatar,formElementEdit,nameInputEdit,jobInputEdit} from '../utils/constants.js';
-import {disabledButton} from '../utils/utils.js';
+import {param,addButton,editButton,formElementAdd,formElementEditAvatar,formElementEdit,nameInputEdit,jobInputEdit,profileOvarlay} from '../utils/constants.js';
+import {disabledButton, renderLoading} from '../utils/utils.js';
 // Функция слушателей события
 const hendleEventListeners = () =>{
     addButton.addEventListener('click',() => {
@@ -20,6 +20,9 @@ const hendleEventListeners = () =>{
         popupEdit.open();
         nameInputEdit.value = user.getUserInfo().name;
         jobInputEdit.value = user.getUserInfo().about;
+    })
+    profileOvarlay.addEventListener('click',()=>{
+        popupEditAvatar.open();
     })
 }
 
@@ -48,7 +51,7 @@ popupDelete.setEventListeners();
 popupEditAvatar.setEventListeners();
 
 // Создание UserInfo
-const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});
+const  user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});
 
 // Создание экземпляра Api
 const api = new Api({
@@ -74,7 +77,6 @@ const cardList =  new Section({items: cards, renderer:(item)=>{
             setListener: confirmPopup.setEventListeners.bind(confirmPopup),
             setLike:api.setLike.bind(api),
             removeLike:api.removeLike.bind(api),
-            getCardInfo:api.getInitialCards.bind(api)
         }, '#template-cards');
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
@@ -109,9 +111,16 @@ const submitFormEdit = new PopupWithForm({
                 },
                 body:formData
         })
+        renderLoading(true)
         newApi.dispatchProfileInfo()
         .then((res)=>{
             user.setUserInfo(res.name, res.about, res.avatar)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(()=>{
+            renderLoading(false)
         })
     }
 })
@@ -130,19 +139,55 @@ const submitFormAdd = new PopupWithForm({
                 },
                 body:formData
         })
+        renderLoading(true)
         newApi.createNewCard()
         .then((res)=>{
             const cardImage = new PopupWithImage(res,'.popup_activity-image');
             const card = new Card({
-                item:res,handleOpenPopup:cardImage.open.bind(cardImage),
+                item:res,
+                handleOpenPopup:cardImage.open.bind(cardImage),
                 hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
                 setListener: confirmPopup.setEventListeners.bind(confirmPopup),
-                handleLikeClick:api.setLike.bind(api),
+                setLike:api.setLike.bind(api),
                 removeLike:api.removeLike.bind(api),
             },'#template-cards');
             const cardElement = card.generateCard();
             cardList.addItem(cardElement);
         })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(()=>{
+            renderLoading(false)
+        })
     }
 })
 submitFormAdd.setEventListeners();
+
+//Создание форм сабмита обновления аватара
+const submitFormEditAvatr = new PopupWithForm({
+    popupSelector: '.popup_edit-avatar',
+    formSubmit:'.popup__form_edit-avatar',
+    handleFormSubmit:(url)=>{
+        const newApi = new Api({
+            baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
+                headers: {
+                    authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
+                    'Content-Type': 'application/json'
+                },
+                body:url
+        })
+        renderLoading(true)
+        newApi.updateAvatar()
+        .then((res)=>{
+            user.setUserInfo(res.name, res.about, res.avatar)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(()=>{
+            renderLoading(false)
+        })
+    }
+})
+submitFormEditAvatr.setEventListeners();

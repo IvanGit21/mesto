@@ -1,5 +1,5 @@
 export default class Card {
-    constructor({item, handleOpenPopup, hendleOpenPopupDel, setListener, setLike, removeLike, getCardInfo}, cardSelector){
+    constructor({item, handleOpenPopup, hendleOpenPopupDel, setListener, setLike, removeLike}, cardSelector){
         this._name = item.name;
         this._link = item.link;
         this._like = item.likes;
@@ -12,7 +12,6 @@ export default class Card {
         this._setListener = setListener;
         this._setLike = setLike;
         this._removeLike = removeLike;
-        this._getCardInfo = getCardInfo;
     }
     // Сортировка состояния иконки удаления
     _iconState(){
