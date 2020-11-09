@@ -8,7 +8,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
-import {param,addButton,editButton,formElementAdd,formElementEdit,nameInputEdit,jobInputEdit} from '../utils/constants.js';
+import {param,addButton,editButton,formElementAdd,formElementEditAvatar,formElementEdit,nameInputEdit,jobInputEdit} from '../utils/constants.js';
 import {disabledButton} from '../utils/utils.js';
 // Функция слушателей события
 const hendleEventListeners = () =>{
@@ -32,15 +32,20 @@ formAdd.enableValidation();
 const formEdit = new FormValidator(param, formElementEdit);
 formEdit.enableValidation();
 
+const formEditAvatar = new FormValidator(param, formElementEditAvatar);
+formEditAvatar.enableValidation();
+
 // Создание попапов
 const popupAdd = new Popup('.popup_add');
 const popupEdit = new Popup('.popup_edit');
 const popupWithImage = new Popup('.popup_activity-image');
-const popupDelete = new Popup('.popup_type_delete')
+const popupDelete = new Popup('.popup_type_delete');
+const popupEditAvatar = new Popup('.popup_edit-avatar');
 popupAdd.setEventListeners();
 popupEdit.setEventListeners();
 popupWithImage.setEventListeners();
 popupDelete.setEventListeners();
+popupEditAvatar.setEventListeners();
 
 // Создание UserInfo
 const user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'.profile__activity', imageSelector:'.profile__avatar'});

@@ -1,6 +1,7 @@
 export const editButton = document.querySelector('.edit-button');
 export const formElementAdd = document.querySelector('.popup__form_add');
 export const formElementEdit = document.querySelector('.popup__form_edit');
+export const formElementEditAvatar = document.querySelector('.popup__form_edit-avatar');
 export const popupEdit = document.querySelector('.popup_edit');
 export const addButton = document.querySelector('.add-button');
 export const popupAdd = document.querySelector('.popup_add');

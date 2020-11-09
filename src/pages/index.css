@@ -46,3 +46,5 @@
 @import url(../blocks/grope-counter/grope-counter.css);
 @import url(../blocks/popup/__header/_type/popup__header_type_delete.css);
 @import url(../blocks/popup/__container/_type/popup__container_type_delete.css);
+@import url(../blocks/profile/__avatar-container/profile__avatar-container.css);
+@import url(../blocks/profile/__overlay/profile__overlay.css);
