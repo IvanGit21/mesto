@@ -7,9 +7,11 @@ export default class PopupWithSubmit extends Popup{
     }
     setEventListeners(id,callback){
         this._confirmButton.addEventListener('click',() => {
-            this._handleDeleteCard(id);
-            callback()
-            super.close();
+            this._handleDeleteCard(id)
+            .finally(()=>{
+                super.close()
+            })
+            callback();
         });
     }
 }

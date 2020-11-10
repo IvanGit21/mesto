@@ -15,11 +15,7 @@ export default class Card {
     }
     // Сортировка состояния иконки удаления
     _iconState(){
-        if(this._owner === 'bea70c3bd52a4fe09217cba6'){
-            return 'block'
-        }else{
-            return 'none'
-        }
+        return this._owner === 'bea70c3bd52a4fe09217cba6'? 'block': 'none';
     }
     // Получение шаблона карточки
     _getTemplate(){

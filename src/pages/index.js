@@ -10,10 +10,11 @@ import Api from '../components/Api.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import {param,addButton,editButton,formElementAdd,formElementEditAvatar,formElementEdit,nameInputEdit,jobInputEdit,profileOvarlay} from '../utils/constants.js';
 import {disabledButton, renderLoading} from '../utils/utils.js';
+
 // Функция слушателей события
 const hendleEventListeners = () =>{
     addButton.addEventListener('click',() => {
-        popupAdd.open();
+        PopupAdd.open();
         disabledButton();
 })
     editButton.addEventListener('click',() =>{
@@ -44,6 +45,7 @@ const popupEdit = new Popup('.popup_edit');
 const popupWithImage = new Popup('.popup_activity-image');
 const popupDelete = new Popup('.popup_type_delete');
 const popupEditAvatar = new Popup('.popup_edit-avatar');
+
 popupAdd.setEventListeners();
 popupEdit.setEventListeners();
 popupWithImage.setEventListeners();
@@ -57,17 +59,25 @@ const  user = new UserInfo({nameSelector:'.profile__name', descriptionSelector:'
 const api = new Api({
     baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
         headers: {
-            authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8'
+            authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
+            'Content-Type': 'application/json'
         }
-});
-// Создание карточек с сервера
-const cards = api.getInitialCards()
+})
+// Загрузка данный с сервера
+const cards = api.getInitialCards();
+const userInfo = api.getProfileInfo();
+
+const arrPromise = [cards, userInfo];
+
+Promise.all(arrPromise)
 .then((res)=>{
-    cardList.renderItems(res);
+    cardList.renderItems(res[0]);
+    user.setUserInfo(res[1].name, res[1].about, res[1].avatar);
 })
 .catch((err)=>{
     console.log(err)
 })
+
 const cardList =  new Section({items: cards, renderer:(item)=>{
         const cardImage = new PopupWithImage(item,'.popup_activity-image');
         const card = new Card({
@@ -84,43 +94,29 @@ const cardList =  new Section({items: cards, renderer:(item)=>{
 
 // Создание экземпляра подтверждения
 const confirmPopup = new PopupWithSubmit({
-    handleDeleteCard: api.deleteCard.bind(api)},
+    handleDeleteCard: api.deleteCard.bind(api)
+},
     '.popup_type_delete',
     '.popup__button_type_delete'
 );
-
-// Запрос информации о пользователе
-api.getProfileInfo()
-.then((res)=>{
-    user.setUserInfo(res.name, res.about, res.avatar);
-})
-.catch((err)=>{
-    console.log(err)
-})
 
 // Создание форм сабмита редактирования
 const submitFormEdit = new PopupWithForm({
     popupSelector: '.popup_edit',
     formSubmit:'.popup__form_edit',
     handleFormSubmit:(formData)=>{
-        const newApi = new Api({
-            baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
-                headers: {
-                    authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
-                    'Content-Type': 'application/json'
-                },
-                body:formData
-        })
         renderLoading(true)
-        newApi.dispatchProfileInfo()
+        api.dispatchProfileInfo(formData)
         .then((res)=>{
             user.setUserInfo(res.name, res.about, res.avatar)
+
         })
         .catch((err) => {
             console.log(err)
         })
         .finally(()=>{
             renderLoading(false)
+            popupEdit.close()
         })
     }
 })
@@ -131,16 +127,8 @@ const submitFormAdd = new PopupWithForm({
     popupSelector: '.popup_add',
     formSubmit:'.popup__form_add',
     handleFormSubmit:(formData)=>{
-        const newApi = new Api({
-            baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
-                headers: {
-                    authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
-                    'Content-Type': 'application/json'
-                },
-                body:formData
-        })
         renderLoading(true)
-        newApi.createNewCard()
+        api.createNewCard(formData)
         .then((res)=>{
             const cardImage = new PopupWithImage(res,'.popup_activity-image');
             const card = new Card({
@@ -159,6 +147,7 @@ const submitFormAdd = new PopupWithForm({
         })
         .finally(()=>{
             renderLoading(false)
+            popupAdd.close()
         })
     }
 })
@@ -169,16 +158,8 @@ const submitFormEditAvatr = new PopupWithForm({
     popupSelector: '.popup_edit-avatar',
     formSubmit:'.popup__form_edit-avatar',
     handleFormSubmit:(url)=>{
-        const newApi = new Api({
-            baseUrl:'https://mesto.nomoreparties.co/v1/cohort-17', 
-                headers: {
-                    authorization: '4e6363ac-1195-46c5-9360-6be88656e9c8',
-                    'Content-Type': 'application/json'
-                },
-                body:url
-        })
         renderLoading(true)
-        newApi.updateAvatar()
+        api.updateAvatar(url)
         .then((res)=>{
             user.setUserInfo(res.name, res.about, res.avatar)
         })
@@ -187,6 +168,7 @@ const submitFormEditAvatr = new PopupWithForm({
         })
         .finally(()=>{
             renderLoading(false)
+            popupEditAvatar.close()
         })
     }
 })
