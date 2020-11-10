@@ -26,8 +26,8 @@ const popupEdit = new PopupWithForm({
             console.log(err)
         })
         .finally(()=>{
-            renderLoading(false)
-            // popupEdit.close()
+            renderLoading(false);
+            popupEdit.close()
         })
     }
 })
@@ -41,15 +41,14 @@ const popupAdd = new PopupWithForm({
         renderLoading(true)
         api.createNewCard(formData)
         .then((res)=>{
-            const cardImage = new PopupWithImage(res,'.popup_activity-image');
             const card = new Card({
                 item:res,
-                handleOpenPopup:cardImage.open.bind(cardImage),
+                handleOpenPopup:popupWithImage.open.bind(popupWithImage),
                 hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
                 setListener: confirmPopup.setEventListeners.bind(confirmPopup),
                 setLike:api.setLike.bind(api),
                 removeLike:api.removeLike.bind(api),
-            },'#template-cards');
+            }, '#template-cards');
             const cardElement = card.generateCard();
             cardList.addItem(cardElement);
         })
@@ -58,7 +57,7 @@ const popupAdd = new PopupWithForm({
         })
         .finally(()=>{
             renderLoading(false)
-            // popupAdd.close()
+            popupAdd.close()
         })
     }
 })
@@ -114,7 +113,7 @@ const formEditAvatar = new FormValidator(param, formElementEditAvatar);
 formEditAvatar.enableValidation();
 
 // Создание попапов
-const popupWithImage = new Popup('.popup_activity-image');
+const popupWithImage = new PopupWithImage('.popup_activity-image');
 const popupDelete = new Popup('.popup_type_delete');
 const popupEditAvatar = new Popup('.popup_edit-avatar');
 
@@ -149,10 +148,10 @@ Promise.all(arrPromise)
 })
 
 const cardList =  new Section({items: cards, renderer:(item)=>{
-        const cardImage = new PopupWithImage(item,'.popup_activity-image');
+        // const cardImage = new PopupWithImage('.popup_activity-image');
         const card = new Card({
             item:item,
-            handleOpenPopup:cardImage.open.bind(cardImage),
+            handleOpenPopup:popupWithImage.open.bind(popupWithImage),
             hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
             setListener: confirmPopup.setEventListeners.bind(confirmPopup),
             setLike:api.setLike.bind(api),
@@ -169,3 +168,8 @@ const confirmPopup = new PopupWithSubmit({
     '.popup_type_delete',
     '.popup__button_type_delete'
 );
+
+api.getProfileInfo()
+.then((res)=>{
+    console.log(res)
+})

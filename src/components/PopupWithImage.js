@@ -1,15 +1,13 @@
 import Popup from './Popup.js';
 import {popupImage, popupHeaderActivityImage} from '../utils/constants.js'
 export default class PopupWithImage extends Popup{
-    constructor({name,link}, popupSelector){
+    constructor( popupSelector){
         super(popupSelector);
-        this._name = name;
-        this._link = link;
     }
     // Функция закрытия попапа с картинкой
-    open(){
+    open(item){
         super.open()
-        popupImage.src = this._link;
-        popupHeaderActivityImage.textContent = this._name;
+        popupImage.src = item.link;
+        popupHeaderActivityImage.textContent = item.name;
     }
 }

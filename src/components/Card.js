@@ -40,7 +40,7 @@ export default class Card {
         this._element.querySelector('.grope-button').addEventListener('click', ()=> {
             this._handleLikeIcon(this._like)
         });
-        this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup());
+        this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup(this._item));
         this._element.querySelector('.element__del-button').style.display = this._iconState();
         this._element.querySelector('.element__del-button').addEventListener('click', ()=> {
             this._handleOpenPopupDel();
