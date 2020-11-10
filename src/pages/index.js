@@ -11,10 +11,84 @@ import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import {param,addButton,editButton,formElementAdd,formElementEditAvatar,formElementEdit,nameInputEdit,jobInputEdit,profileOvarlay} from '../utils/constants.js';
 import {disabledButton, renderLoading} from '../utils/utils.js';
 
+// Создание форм сабмита редактирования
+const popupEdit = new PopupWithForm({
+    popupSelector: '.popup_edit',
+    formSubmit:'.popup__form_edit',
+    handleFormSubmit:(formData)=>{
+        renderLoading(true)
+        api.dispatchProfileInfo(formData)
+        .then((res)=>{
+            user.setUserInfo(res.name, res.about, res.avatar)
+
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(()=>{
+            renderLoading(false)
+            // popupEdit.close()
+        })
+    }
+})
+popupEdit.setEventListeners();
+
+// Создание форм сабмита добавления
+const popupAdd = new PopupWithForm({
+    popupSelector: '.popup_add',
+    formSubmit:'.popup__form_add',
+    handleFormSubmit:(formData)=>{
+        renderLoading(true)
+        api.createNewCard(formData)
+        .then((res)=>{
+            const cardImage = new PopupWithImage(res,'.popup_activity-image');
+            const card = new Card({
+                item:res,
+                handleOpenPopup:cardImage.open.bind(cardImage),
+                hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
+                setListener: confirmPopup.setEventListeners.bind(confirmPopup),
+                setLike:api.setLike.bind(api),
+                removeLike:api.removeLike.bind(api),
+            },'#template-cards');
+            const cardElement = card.generateCard();
+            cardList.addItem(cardElement);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(()=>{
+            renderLoading(false)
+            // popupAdd.close()
+        })
+    }
+})
+popupAdd.setEventListeners();
+
+//Создание форм сабмита обновления аватара
+const popupEditAvatr = new PopupWithForm({
+    popupSelector: '.popup_edit-avatar',
+    formSubmit:'.popup__form_edit-avatar',
+    handleFormSubmit:(url)=>{
+        renderLoading(true)
+        api.updateAvatar(url)
+        .then((res)=>{
+            user.setUserInfo(res.name, res.about, res.avatar)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(()=>{
+            renderLoading(false)
+            popupEditAvatar.close()
+        })
+    }
+})
+popupEditAvatr.setEventListeners();
+
 // Функция слушателей события
 const hendleEventListeners = () =>{
     addButton.addEventListener('click',() => {
-        PopupAdd.open();
+        popupAdd.open()
         disabledButton();
 })
     editButton.addEventListener('click',() =>{
@@ -40,14 +114,10 @@ const formEditAvatar = new FormValidator(param, formElementEditAvatar);
 formEditAvatar.enableValidation();
 
 // Создание попапов
-const popupAdd = new Popup('.popup_add');
-const popupEdit = new Popup('.popup_edit');
 const popupWithImage = new Popup('.popup_activity-image');
 const popupDelete = new Popup('.popup_type_delete');
 const popupEditAvatar = new Popup('.popup_edit-avatar');
 
-popupAdd.setEventListeners();
-popupEdit.setEventListeners();
 popupWithImage.setEventListeners();
 popupDelete.setEventListeners();
 popupEditAvatar.setEventListeners();
@@ -99,77 +169,3 @@ const confirmPopup = new PopupWithSubmit({
     '.popup_type_delete',
     '.popup__button_type_delete'
 );
-
-// Создание форм сабмита редактирования
-const submitFormEdit = new PopupWithForm({
-    popupSelector: '.popup_edit',
-    formSubmit:'.popup__form_edit',
-    handleFormSubmit:(formData)=>{
-        renderLoading(true)
-        api.dispatchProfileInfo(formData)
-        .then((res)=>{
-            user.setUserInfo(res.name, res.about, res.avatar)
-
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        .finally(()=>{
-            renderLoading(false)
-            popupEdit.close()
-        })
-    }
-})
-submitFormEdit.setEventListeners();
-
-// Создание форм сабмита добавления
-const submitFormAdd = new PopupWithForm({
-    popupSelector: '.popup_add',
-    formSubmit:'.popup__form_add',
-    handleFormSubmit:(formData)=>{
-        renderLoading(true)
-        api.createNewCard(formData)
-        .then((res)=>{
-            const cardImage = new PopupWithImage(res,'.popup_activity-image');
-            const card = new Card({
-                item:res,
-                handleOpenPopup:cardImage.open.bind(cardImage),
-                hendleOpenPopupDel:popupDelete.open.bind(popupDelete),
-                setListener: confirmPopup.setEventListeners.bind(confirmPopup),
-                setLike:api.setLike.bind(api),
-                removeLike:api.removeLike.bind(api),
-            },'#template-cards');
-            const cardElement = card.generateCard();
-            cardList.addItem(cardElement);
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        .finally(()=>{
-            renderLoading(false)
-            popupAdd.close()
-        })
-    }
-})
-submitFormAdd.setEventListeners();
-
-//Создание форм сабмита обновления аватара
-const submitFormEditAvatr = new PopupWithForm({
-    popupSelector: '.popup_edit-avatar',
-    formSubmit:'.popup__form_edit-avatar',
-    handleFormSubmit:(url)=>{
-        renderLoading(true)
-        api.updateAvatar(url)
-        .then((res)=>{
-            user.setUserInfo(res.name, res.about, res.avatar)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        .finally(()=>{
-            renderLoading(false)
-            popupEditAvatar.close()
-        })
-    }
-})
-submitFormEditAvatr.setEventListeners();
