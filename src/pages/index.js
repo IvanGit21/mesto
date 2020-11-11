@@ -20,7 +20,6 @@ const popupEdit = new PopupWithForm({
         api.dispatchProfileInfo(formData)
         .then((res)=>{
             user.setUserInfo(res.name, res.about, res.avatar)
-
         })
         .catch((err) => {
             console.log(err)
@@ -48,6 +47,9 @@ const popupAdd = new PopupWithForm({
                 setListener: confirmPopup.setEventListeners.bind(confirmPopup),
                 setLike:api.setLike.bind(api),
                 removeLike:api.removeLike.bind(api),
+                iconState:(id)=>{
+                    return id === userId ? 'block' : 'none';
+                }
             }, '#template-cards');
             const cardElement = card.generateCard();
             cardList.addItem(cardElement);
@@ -138,17 +140,18 @@ const userInfo = api.getProfileInfo();
 
 const arrPromise = [cards, userInfo];
 
+let userId = null;
+
 Promise.all(arrPromise)
 .then((res)=>{
-    cardList.renderItems(res[0]);
+    userId = res[1]._id;
     user.setUserInfo(res[1].name, res[1].about, res[1].avatar);
+    cardList.renderItems(res[0]);
 })
 .catch((err)=>{
     console.log(err)
-})
-
+});
 const cardList =  new Section({items: cards, renderer:(item)=>{
-        // const cardImage = new PopupWithImage('.popup_activity-image');
         const card = new Card({
             item:item,
             handleOpenPopup:popupWithImage.open.bind(popupWithImage),
@@ -156,6 +159,12 @@ const cardList =  new Section({items: cards, renderer:(item)=>{
             setListener: confirmPopup.setEventListeners.bind(confirmPopup),
             setLike:api.setLike.bind(api),
             removeLike:api.removeLike.bind(api),
+            iconState:(id)=>{
+                return id === userId ? 'block' : 'none';
+            },
+            likeState:(id)=>{
+                return id === userId
+            }
         }, '#template-cards');
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
@@ -168,8 +177,3 @@ const confirmPopup = new PopupWithSubmit({
     '.popup_type_delete',
     '.popup__button_type_delete'
 );
-
-api.getProfileInfo()
-.then((res)=>{
-    console.log(res)
-})

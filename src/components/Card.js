@@ -1,5 +1,6 @@
+// import {userId} from '../pages/index.js'
 export default class Card {
-    constructor({item, handleOpenPopup, hendleOpenPopupDel, setListener, setLike, removeLike}, cardSelector){
+    constructor({item, handleOpenPopup, hendleOpenPopupDel, setListener, setLike, removeLike, iconState, likeState}, cardSelector){
         this._name = item.name;
         this._link = item.link;
         this._like = item.likes;
@@ -12,10 +13,8 @@ export default class Card {
         this._setListener = setListener;
         this._setLike = setLike;
         this._removeLike = removeLike;
-    }
-    // Сортировка состояния иконки удаления
-    _iconState(){
-        return this._owner === 'bea70c3bd52a4fe09217cba6'? 'block': 'none';
+        this._iconState = iconState;
+        this._likeState = likeState;
     }
     // Получение шаблона карточки
     _getTemplate(){
@@ -41,7 +40,7 @@ export default class Card {
             this._handleLikeIcon(this._like)
         });
         this._element.querySelector('.element__image').addEventListener('click', ()=> this._handleOpenPopup(this._item));
-        this._element.querySelector('.element__del-button').style.display = this._iconState();
+        this._element.querySelector('.element__del-button').style.display = this._iconState(this._owner);
         this._element.querySelector('.element__del-button').addEventListener('click', ()=> {
             this._handleOpenPopupDel();
             this._setListener(this._cardId,this._deleteCard.bind(this))
@@ -75,7 +74,7 @@ export default class Card {
     // Проверка наличия собственного лайка
     _checkLikeMe(list){
         const newList = list.some((el)=>{
-            return el._id === 'bea70c3bd52a4fe09217cba6'
+            return this._likeState(el._id)
         })
         return newList;
     }
