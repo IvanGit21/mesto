@@ -5,10 +5,12 @@ export function disabledButton(){
     buttonAdd.classList.add(param.inactiveButtonClass);
 }
 export function renderLoading(isLoad){
+    const popup = document.querySelector('.popup_opened');
+    const btn = popup.querySelector('.popup__button');
     if(isLoad){
-        popupButton.textContent = 'Сохранение...';
+        btn.textContent = 'Сохранение...';
     }else{
-        popupButton.textContent = 'Сохранить';
+        btn.textContent = 'Сохранить';
     }
 }
 export function handleOriginalResponse(res){

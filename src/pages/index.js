@@ -49,6 +49,9 @@ const popupAdd = new PopupWithForm({
                 removeLike:api.removeLike.bind(api),
                 iconState:(id)=>{
                     return id === userId ? 'block' : 'none';
+                },
+                likeState:(id)=>{
+                    return id === userId
                 }
             }, '#template-cards');
             const cardElement = card.generateCard();

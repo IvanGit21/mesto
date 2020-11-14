@@ -1,5 +1,4 @@
 export const editButton = document.querySelector('.edit-button');
-export const popupButton = document.querySelector('.popup__button');
 export const formElementAdd = document.querySelector('.popup__form_add');
 export const formElementEdit = document.querySelector('.popup__form_edit');
 export const formElementEditAvatar = document.querySelector('.popup__form_edit-avatar');
